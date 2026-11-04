@@ -1,0 +1,2477 @@
+[
+  {
+    "key": "bg:auroraRibbons",
+    "id": "auroraRibbons",
+    "kind": "background",
+    "name": "极光",
+    "tags": [
+      "emotional",
+      "calm"
+    ],
+    "source": "JIZURA",
+    "originalName": "オーロラ"
+  },
+  {
+    "key": "bg:meshBlobs",
+    "id": "meshBlobs",
+    "kind": "background",
+    "name": "网状渐变",
+    "tags": [
+      "calm",
+      "emotional",
+      "pop"
+    ],
+    "source": "JIZURA",
+    "originalName": "メッシュグラデ"
+  },
+  {
+    "key": "bg:duotoneSweep",
+    "id": "duotoneSweep",
+    "kind": "background",
+    "name": "双色渐变",
+    "tags": [
+      "calm",
+      "pop",
+      "graphic",
+      "emotional"
+    ],
+    "source": "JIZURA",
+    "originalName": "二色スイープ"
+  },
+  {
+    "key": "bg:horizonGlow",
+    "id": "horizonGlow",
+    "kind": "background",
+    "name": "行星地平线",
+    "tags": [
+      "emotional",
+      "calm",
+      "editorial"
+    ],
+    "source": "JIZURA",
+    "originalName": "惑星の縁"
+  },
+  {
+    "key": "bg:seigaiha",
+    "id": "seigaiha",
+    "kind": "background",
+    "name": "青海波",
+    "tags": [
+      "calm",
+      "editorial",
+      "graphic"
+    ],
+    "source": "JIZURA",
+    "originalName": "青海波"
+  },
+  {
+    "key": "bg:asanoha",
+    "id": "asanoha",
+    "kind": "background",
+    "name": "麻叶纹",
+    "tags": [
+      "calm",
+      "editorial",
+      "graphic",
+      "emotional"
+    ],
+    "source": "JIZURA",
+    "originalName": "麻の葉"
+  },
+  {
+    "key": "bg:houndstooth",
+    "id": "houndstooth",
+    "kind": "background",
+    "name": "千鸟格",
+    "tags": [
+      "graphic",
+      "editorial",
+      "pop"
+    ],
+    "source": "JIZURA",
+    "originalName": "千鳥格子"
+  },
+  {
+    "key": "bg:herringbone",
+    "id": "herringbone",
+    "kind": "background",
+    "name": "人字纹",
+    "tags": [
+      "editorial",
+      "calm",
+      "graphic"
+    ],
+    "source": "JIZURA",
+    "originalName": "ヘリンボーン"
+  },
+  {
+    "key": "bg:argyle",
+    "id": "argyle",
+    "kind": "background",
+    "name": "菱格纹",
+    "tags": [
+      "pop",
+      "graphic",
+      "editorial"
+    ],
+    "source": "JIZURA",
+    "originalName": "アーガイル"
+  },
+  {
+    "key": "bg:tartan",
+    "id": "tartan",
+    "kind": "background",
+    "name": "苏格兰格",
+    "tags": [
+      "pop",
+      "calm",
+      "editorial"
+    ],
+    "source": "JIZURA",
+    "originalName": "タータン"
+  },
+  {
+    "key": "bg:chevron",
+    "id": "chevron",
+    "kind": "background",
+    "name": "山形纹",
+    "tags": [
+      "pop",
+      "graphic"
+    ],
+    "source": "JIZURA",
+    "originalName": "山形"
+  },
+  {
+    "key": "bg:isoCubes",
+    "id": "isoCubes",
+    "kind": "background",
+    "name": "立方体",
+    "tags": [
+      "graphic",
+      "pop",
+      "calm"
+    ],
+    "source": "JIZURA",
+    "originalName": "立方体"
+  },
+  {
+    "key": "bg:hexGrid",
+    "id": "hexGrid",
+    "kind": "background",
+    "name": "六角网格",
+    "tags": [
+      "graphic",
+      "glitch",
+      "calm"
+    ],
+    "source": "JIZURA",
+    "originalName": "六角格子"
+  },
+  {
+    "key": "bg:triTess",
+    "id": "triTess",
+    "kind": "background",
+    "name": "三角拼贴",
+    "tags": [
+      "graphic",
+      "calm",
+      "emotional"
+    ],
+    "source": "JIZURA",
+    "originalName": "三角モザイク"
+  },
+  {
+    "key": "bg:moire",
+    "id": "moire",
+    "kind": "background",
+    "name": "摩尔纹",
+    "tags": [
+      "glitch",
+      "graphic",
+      "calm"
+    ],
+    "source": "JIZURA",
+    "originalName": "モアレ"
+  },
+  {
+    "key": "bg:squareTunnel",
+    "id": "squareTunnel",
+    "kind": "background",
+    "name": "方形隧道",
+    "tags": [
+      "glitch",
+      "graphic",
+      "pop"
+    ],
+    "source": "JIZURA",
+    "originalName": "四角トンネル"
+  },
+  {
+    "key": "bg:spiralArms",
+    "id": "spiralArms",
+    "kind": "background",
+    "name": "旋涡",
+    "tags": [
+      "glitch",
+      "pop",
+      "graphic"
+    ],
+    "source": "JIZURA",
+    "originalName": "渦巻き"
+  },
+  {
+    "key": "bg:topoLines",
+    "id": "topoLines",
+    "kind": "background",
+    "name": "等高线",
+    "tags": [
+      "calm",
+      "editorial",
+      "graphic"
+    ],
+    "source": "JIZURA",
+    "originalName": "等高線"
+  },
+  {
+    "key": "bg:ridgePlot",
+    "id": "ridgePlot",
+    "kind": "background",
+    "name": "山脊线",
+    "tags": [
+      "editorial",
+      "emotional",
+      "calm"
+    ],
+    "source": "JIZURA",
+    "originalName": "稜線グラフ"
+  },
+  {
+    "key": "bg:starfield",
+    "id": "starfield",
+    "kind": "background",
+    "name": "星野",
+    "tags": [
+      "emotional",
+      "calm"
+    ],
+    "source": "JIZURA",
+    "originalName": "星空"
+  },
+  {
+    "key": "bg:nightMoon",
+    "id": "nightMoon",
+    "kind": "background",
+    "name": "月夜",
+    "tags": [
+      "emotional",
+      "calm",
+      "editorial"
+    ],
+    "source": "JIZURA",
+    "originalName": "月夜"
+  },
+  {
+    "key": "bg:skyline",
+    "id": "skyline",
+    "kind": "background",
+    "name": "城市剪影",
+    "tags": [
+      "emotional",
+      "editorial",
+      "pop"
+    ],
+    "source": "JIZURA",
+    "originalName": "街並み"
+  },
+  {
+    "key": "bg:sunsetSun",
+    "id": "sunsetSun",
+    "kind": "background",
+    "name": "落日",
+    "tags": [
+      "emotional",
+      "calm",
+      "pop"
+    ],
+    "source": "JIZURA",
+    "originalName": "夕日"
+  },
+  {
+    "key": "bg:oceanWaves",
+    "id": "oceanWaves",
+    "kind": "background",
+    "name": "海浪",
+    "tags": [
+      "calm",
+      "emotional",
+      "editorial"
+    ],
+    "source": "JIZURA",
+    "originalName": "海の波"
+  },
+  {
+    "key": "bg:rainWindow",
+    "id": "rainWindow",
+    "kind": "background",
+    "name": "雨窗",
+    "tags": [
+      "emotional",
+      "calm",
+      "editorial"
+    ],
+    "source": "JIZURA",
+    "originalName": "雨の窓"
+  },
+  {
+    "key": "bg:snowLayers",
+    "id": "snowLayers",
+    "kind": "background",
+    "name": "层叠雪",
+    "tags": [
+      "calm",
+      "emotional"
+    ],
+    "source": "JIZURA",
+    "originalName": "雪"
+  },
+  {
+    "key": "bg:fireworks",
+    "id": "fireworks",
+    "kind": "background",
+    "name": "烟花",
+    "tags": [
+      "pop",
+      "emotional"
+    ],
+    "source": "JIZURA",
+    "originalName": "花火"
+  },
+  {
+    "key": "bg:cloudLayers",
+    "id": "cloudLayers",
+    "kind": "background",
+    "name": "云层",
+    "tags": [
+      "calm",
+      "emotional",
+      "pop"
+    ],
+    "source": "JIZURA",
+    "originalName": "雲"
+  },
+  {
+    "key": "bg:mountains",
+    "id": "mountains",
+    "kind": "background",
+    "name": "群山",
+    "tags": [
+      "calm",
+      "emotional",
+      "editorial"
+    ],
+    "source": "JIZURA",
+    "originalName": "山並み"
+  },
+  {
+    "key": "bg:filmStrip",
+    "id": "filmStrip",
+    "kind": "background",
+    "name": "胶片",
+    "tags": [
+      "editorial",
+      "emotional",
+      "glitch"
+    ],
+    "source": "JIZURA",
+    "originalName": "フィルム"
+  },
+  {
+    "key": "bg:vhsBand",
+    "id": "vhsBand",
+    "kind": "background",
+    "name": "录像带噪声",
+    "tags": [
+      "glitch",
+      "emotional"
+    ],
+    "source": "JIZURA",
+    "originalName": "VHSノイズ"
+  },
+  {
+    "key": "bg:tornPaper",
+    "id": "tornPaper",
+    "kind": "background",
+    "name": "撕纸",
+    "tags": [
+      "editorial",
+      "emotional",
+      "pop"
+    ],
+    "source": "JIZURA",
+    "originalName": "破れ紙"
+  },
+  {
+    "key": "bg:godRays",
+    "id": "godRays",
+    "kind": "background",
+    "name": "光芒",
+    "tags": [
+      "emotional",
+      "calm",
+      "editorial"
+    ],
+    "source": "JIZURA",
+    "originalName": "光芒"
+  },
+  {
+    "key": "bg:vignettePulse",
+    "id": "vignettePulse",
+    "kind": "background",
+    "name": "周边光晕",
+    "tags": [
+      "emotional",
+      "calm",
+      "pop"
+    ],
+    "source": "JIZURA",
+    "originalName": "色の周辺光"
+  },
+  {
+    "key": "bg:kaleidoscope",
+    "id": "kaleidoscope",
+    "kind": "background",
+    "name": "万花筒",
+    "tags": [
+      "pop",
+      "glitch",
+      "emotional"
+    ],
+    "source": "JIZURA",
+    "originalName": "万華鏡"
+  },
+  {
+    "key": "bg:marble",
+    "id": "marble",
+    "kind": "background",
+    "name": "大理石",
+    "tags": [
+      "calm",
+      "editorial",
+      "emotional"
+    ],
+    "source": "JIZURA",
+    "originalName": "大理石"
+  },
+  {
+    "key": "bg:paperCut",
+    "id": "paperCut",
+    "kind": "background",
+    "name": "剪纸",
+    "tags": [
+      "pop",
+      "emotional",
+      "calm"
+    ],
+    "source": "JIZURA",
+    "originalName": "切り絵"
+  },
+  {
+    "key": "bg:hrFailingLamp",
+    "id": "hrFailingLamp",
+    "kind": "background",
+    "name": "闪烁灯光",
+    "tags": [
+      "horror",
+      "emotional"
+    ],
+    "source": "JIZURA",
+    "originalName": "切れかけの灯"
+  },
+  {
+    "key": "bg:hrCorridor",
+    "id": "hrCorridor",
+    "kind": "background",
+    "name": "暗廊",
+    "tags": [
+      "horror",
+      "graphic"
+    ],
+    "source": "JIZURA",
+    "originalName": "暗い廊下"
+  },
+  {
+    "key": "bg:hrMold",
+    "id": "hrMold",
+    "kind": "background",
+    "name": "染斑",
+    "tags": [
+      "horror",
+      "emotional"
+    ],
+    "source": "JIZURA",
+    "originalName": "広がる染み"
+  },
+  {
+    "key": "bg:hrDeadTrees",
+    "id": "hrDeadTrees",
+    "kind": "background",
+    "name": "枯木",
+    "tags": [
+      "horror",
+      "calm",
+      "emotional"
+    ],
+    "source": "JIZURA",
+    "originalName": "枯れ木の森"
+  },
+  {
+    "key": "bg:sunburst",
+    "id": "sunburst",
+    "kind": "background",
+    "name": "放射纹",
+    "tags": [
+      "pop",
+      "graphic"
+    ],
+    "source": "JIZURA",
+    "originalName": "放射"
+  },
+  {
+    "key": "bg:concentric",
+    "id": "concentric",
+    "kind": "background",
+    "name": "同心圆",
+    "tags": [
+      "calm",
+      "graphic",
+      "emotional"
+    ],
+    "source": "JIZURA",
+    "originalName": "同心円"
+  },
+  {
+    "key": "bg:halftoneFade",
+    "id": "halftoneFade",
+    "kind": "background",
+    "name": "半调渐变",
+    "tags": [
+      "pop",
+      "graphic",
+      "editorial"
+    ],
+    "source": "JIZURA",
+    "originalName": "網点グラデ"
+  },
+  {
+    "key": "bg:bigStripes",
+    "id": "bigStripes",
+    "kind": "background",
+    "name": "粗斜纹",
+    "tags": [
+      "graphic",
+      "pop"
+    ],
+    "source": "JIZURA",
+    "originalName": "大きな斜線"
+  },
+  {
+    "key": "bg:splitV",
+    "id": "splitV",
+    "kind": "background",
+    "name": "左右分色",
+    "tags": [
+      "graphic",
+      "editorial",
+      "pop"
+    ],
+    "source": "JIZURA",
+    "originalName": "左右二色"
+  },
+  {
+    "key": "bg:splitH",
+    "id": "splitH",
+    "kind": "background",
+    "name": "上下分色",
+    "tags": [
+      "graphic",
+      "editorial",
+      "calm"
+    ],
+    "source": "JIZURA",
+    "originalName": "上下二色"
+  },
+  {
+    "key": "bg:splitDiag",
+    "id": "splitDiag",
+    "kind": "background",
+    "name": "斜分色",
+    "tags": [
+      "graphic",
+      "pop"
+    ],
+    "source": "JIZURA",
+    "originalName": "斜め二色"
+  },
+  {
+    "key": "bg:gradientSweep",
+    "id": "gradientSweep",
+    "kind": "background",
+    "name": "渐变",
+    "tags": [
+      "calm",
+      "emotional",
+      "pop"
+    ],
+    "source": "JIZURA",
+    "originalName": "グラデ"
+  },
+  {
+    "key": "bg:spotlight",
+    "id": "spotlight",
+    "kind": "background",
+    "name": "聚光灯",
+    "tags": [
+      "emotional",
+      "calm",
+      "editorial"
+    ],
+    "source": "JIZURA",
+    "originalName": "スポットライト"
+  },
+  {
+    "key": "bg:tvBars",
+    "id": "tvBars",
+    "kind": "background",
+    "name": "电视色条",
+    "tags": [
+      "glitch",
+      "graphic",
+      "emotional"
+    ],
+    "source": "JIZURA",
+    "originalName": "テレビの帯"
+  },
+  {
+    "key": "bg:checker",
+    "id": "checker",
+    "kind": "background",
+    "name": "棋盘格",
+    "tags": [
+      "graphic",
+      "pop"
+    ],
+    "source": "JIZURA",
+    "originalName": "市松"
+  },
+  {
+    "key": "bg:bigChar",
+    "id": "bigChar",
+    "kind": "background",
+    "name": "巨型字符",
+    "tags": [
+      "editorial",
+      "emotional",
+      "graphic",
+      "calm"
+    ],
+    "source": "JIZURA",
+    "originalName": "巨大文字"
+  },
+  {
+    "key": "bg:speedLines",
+    "id": "speedLines",
+    "kind": "background",
+    "name": "集中线",
+    "tags": [
+      "pop",
+      "emotional",
+      "graphic"
+    ],
+    "source": "JIZURA",
+    "originalName": "集中線"
+  },
+  {
+    "key": "bg:scanBars",
+    "id": "scanBars",
+    "kind": "background",
+    "name": "扫描条纹",
+    "tags": [
+      "calm",
+      "glitch",
+      "editorial"
+    ],
+    "source": "JIZURA",
+    "originalName": "走査線の帯"
+  },
+  {
+    "key": "bg:dotGrid",
+    "id": "dotGrid",
+    "kind": "background",
+    "name": "网格点",
+    "tags": [
+      "calm",
+      "editorial",
+      "graphic"
+    ],
+    "source": "JIZURA",
+    "originalName": "ドット格子"
+  },
+  {
+    "key": "bg:retroGrid",
+    "id": "retroGrid",
+    "kind": "background",
+    "name": "复古网格",
+    "tags": [
+      "pop",
+      "glitch",
+      "graphic"
+    ],
+    "source": "JIZURA",
+    "originalName": "レトロ格子"
+  },
+  {
+    "key": "bg:bokehBg",
+    "id": "bokehBg",
+    "kind": "background",
+    "name": "背景光斑",
+    "tags": [
+      "emotional",
+      "calm",
+      "pop"
+    ],
+    "source": "JIZURA",
+    "originalName": "ボケ玉"
+  },
+  {
+    "key": "bg:particlesBg",
+    "id": "particlesBg",
+    "kind": "background",
+    "name": "背景粒子",
+    "tags": [
+      "emotional",
+      "calm",
+      "pop"
+    ],
+    "source": "JIZURA",
+    "originalName": "舞い上がる粒"
+  },
+  {
+    "key": "bg:ripples",
+    "id": "ripples",
+    "kind": "background",
+    "name": "水波",
+    "tags": [
+      "calm",
+      "emotional",
+      "graphic"
+    ],
+    "source": "JIZURA",
+    "originalName": "波紋"
+  },
+  {
+    "key": "bg:polka",
+    "id": "polka",
+    "kind": "background",
+    "name": "圆点",
+    "tags": [
+      "pop",
+      "graphic"
+    ],
+    "source": "JIZURA",
+    "originalName": "水玉"
+  },
+  {
+    "key": "bg:eqBars",
+    "id": "eqBars",
+    "kind": "background",
+    "name": "均衡器",
+    "tags": [
+      "pop",
+      "glitch",
+      "graphic"
+    ],
+    "source": "JIZURA",
+    "originalName": "背景イコライザー"
+  },
+  {
+    "key": "bg:borderFrame",
+    "id": "borderFrame",
+    "kind": "background",
+    "name": "粗边框",
+    "tags": [
+      "graphic",
+      "pop",
+      "editorial"
+    ],
+    "source": "JIZURA",
+    "originalName": "太枠"
+  },
+  {
+    "key": "bg:letterbox",
+    "id": "letterbox",
+    "kind": "background",
+    "name": "电影画幅",
+    "tags": [
+      "emotional",
+      "editorial",
+      "calm"
+    ],
+    "source": "JIZURA",
+    "originalName": "シネスコ帯"
+  },
+  {
+    "key": "bg:noiseField",
+    "id": "noiseField",
+    "kind": "background",
+    "name": "噪声纹理",
+    "tags": [
+      "glitch",
+      "emotional"
+    ],
+    "source": "JIZURA",
+    "originalName": "ノイズの揺らぎ"
+  },
+  {
+    "key": "decor:grid",
+    "id": "grid",
+    "kind": "decoration",
+    "name": "格网",
+    "tags": [
+      "graphic",
+      "editorial"
+    ],
+    "source": "JIZURA",
+    "originalName": "グリッド"
+  },
+  {
+    "key": "decor:stripes",
+    "id": "stripes",
+    "kind": "decoration",
+    "name": "条纹",
+    "tags": [
+      "graphic",
+      "pop"
+    ],
+    "source": "JIZURA",
+    "originalName": "ストライプ"
+  },
+  {
+    "key": "decor:blobs",
+    "id": "blobs",
+    "kind": "decoration",
+    "name": "墨迹",
+    "tags": [
+      "pop",
+      "emotional"
+    ],
+    "source": "JIZURA",
+    "originalName": "インクの染み"
+  },
+  {
+    "key": "decor:bars",
+    "id": "bars",
+    "kind": "decoration",
+    "name": "色带",
+    "tags": [
+      "graphic",
+      "glitch"
+    ],
+    "source": "JIZURA",
+    "originalName": "荒い帯"
+  },
+  {
+    "key": "decor:shapes",
+    "id": "shapes",
+    "kind": "decoration",
+    "name": "几何图形",
+    "tags": [
+      "pop",
+      "graphic"
+    ],
+    "source": "JIZURA",
+    "originalName": "図形"
+  },
+  {
+    "key": "decor:counter",
+    "id": "counter",
+    "kind": "decoration",
+    "name": "大号数字",
+    "tags": [
+      "graphic",
+      "editorial"
+    ],
+    "source": "JIZURA",
+    "originalName": "大きな数字"
+  },
+  {
+    "key": "decor:brackets",
+    "id": "brackets",
+    "kind": "decoration",
+    "name": "括角",
+    "tags": [
+      "graphic",
+      "editorial"
+    ],
+    "source": "JIZURA",
+    "originalName": "枠マーク"
+  },
+  {
+    "key": "decor:rings",
+    "id": "rings",
+    "kind": "decoration",
+    "name": "坐标环",
+    "tags": [
+      "graphic",
+      "emotional"
+    ],
+    "source": "JIZURA",
+    "originalName": "座標の円"
+  },
+  {
+    "key": "decor:dots",
+    "id": "dots",
+    "kind": "decoration",
+    "name": "点阵环",
+    "tags": [
+      "pop",
+      "graphic"
+    ],
+    "source": "JIZURA",
+    "originalName": "ドットの輪"
+  },
+  {
+    "key": "decor:arrows",
+    "id": "arrows",
+    "kind": "decoration",
+    "name": "箭头",
+    "tags": [
+      "pop",
+      "graphic"
+    ],
+    "source": "JIZURA",
+    "originalName": "矢印"
+  },
+  {
+    "key": "decor:slash",
+    "id": "slash",
+    "kind": "decoration",
+    "name": "斜线",
+    "tags": [
+      "glitch",
+      "graphic"
+    ],
+    "source": "JIZURA",
+    "originalName": "スラッシュ"
+  },
+  {
+    "key": "decor:sparks",
+    "id": "sparks",
+    "kind": "decoration",
+    "name": "火花",
+    "tags": [
+      "pop"
+    ],
+    "source": "JIZURA",
+    "originalName": "スパーク"
+  },
+  {
+    "key": "decor:leaders",
+    "id": "leaders",
+    "kind": "decoration",
+    "name": "引出线",
+    "tags": [
+      "editorial",
+      "calm"
+    ],
+    "source": "JIZURA",
+    "originalName": "引き出し線"
+  },
+  {
+    "key": "decor:waveform",
+    "id": "waveform",
+    "kind": "decoration",
+    "name": "波形",
+    "tags": [
+      "emotional",
+      "calm"
+    ],
+    "source": "JIZURA",
+    "originalName": "波形"
+  },
+  {
+    "key": "decor:barcode",
+    "id": "barcode",
+    "kind": "decoration",
+    "name": "条码",
+    "tags": [
+      "glitch",
+      "graphic"
+    ],
+    "source": "JIZURA",
+    "originalName": "バーコード"
+  },
+  {
+    "key": "decor:crosshair",
+    "id": "crosshair",
+    "kind": "decoration",
+    "name": "十字准星",
+    "tags": [
+      "graphic",
+      "editorial",
+      "glitch"
+    ],
+    "source": "JIZURA",
+    "originalName": "照準線"
+  },
+  {
+    "key": "decor:cropMarks",
+    "id": "cropMarks",
+    "kind": "decoration",
+    "name": "定位线",
+    "tags": [
+      "editorial",
+      "graphic",
+      "calm"
+    ],
+    "source": "JIZURA",
+    "originalName": "トンボ"
+  },
+  {
+    "key": "decor:reticle",
+    "id": "reticle",
+    "kind": "decoration",
+    "name": "锁定框",
+    "tags": [
+      "glitch",
+      "graphic"
+    ],
+    "source": "JIZURA",
+    "originalName": "ロックオン"
+  },
+  {
+    "key": "decor:radar",
+    "id": "radar",
+    "kind": "decoration",
+    "name": "雷达",
+    "tags": [
+      "glitch",
+      "graphic"
+    ],
+    "source": "JIZURA",
+    "originalName": "レーダー"
+  },
+  {
+    "key": "decor:progressRing",
+    "id": "progressRing",
+    "kind": "decoration",
+    "name": "进度环",
+    "tags": [
+      "graphic",
+      "editorial",
+      "calm"
+    ],
+    "source": "JIZURA",
+    "originalName": "進行リング"
+  },
+  {
+    "key": "decor:timecodeBar",
+    "id": "timecodeBar",
+    "kind": "decoration",
+    "name": "时间码",
+    "tags": [
+      "editorial",
+      "glitch",
+      "graphic"
+    ],
+    "source": "JIZURA",
+    "originalName": "タイムコード"
+  },
+  {
+    "key": "decor:rulerEdge",
+    "id": "rulerEdge",
+    "kind": "decoration",
+    "name": "边缘标尺",
+    "tags": [
+      "editorial",
+      "graphic",
+      "calm"
+    ],
+    "source": "JIZURA",
+    "originalName": "端の定規"
+  },
+  {
+    "key": "decor:dimension",
+    "id": "dimension",
+    "kind": "decoration",
+    "name": "尺寸线",
+    "tags": [
+      "editorial",
+      "graphic"
+    ],
+    "source": "JIZURA",
+    "originalName": "寸法線"
+  },
+  {
+    "key": "decor:indexNum",
+    "id": "indexNum",
+    "kind": "decoration",
+    "name": "编号",
+    "tags": [
+      "editorial",
+      "graphic",
+      "calm"
+    ],
+    "source": "JIZURA",
+    "originalName": "通し番号"
+  },
+  {
+    "key": "decor:dateStamp",
+    "id": "dateStamp",
+    "kind": "decoration",
+    "name": "日期戳",
+    "tags": [
+      "emotional",
+      "pop",
+      "calm"
+    ],
+    "source": "JIZURA",
+    "originalName": "日付写真"
+  },
+  {
+    "key": "decor:qrBlock",
+    "id": "qrBlock",
+    "kind": "decoration",
+    "name": "二维码图形",
+    "tags": [
+      "graphic",
+      "glitch",
+      "pop"
+    ],
+    "source": "JIZURA",
+    "originalName": "QR風ブロック"
+  },
+  {
+    "key": "decor:glitchRects",
+    "id": "glitchRects",
+    "kind": "decoration",
+    "name": "故障碎片",
+    "tags": [
+      "glitch"
+    ],
+    "source": "JIZURA",
+    "originalName": "グリッチ片"
+  },
+  {
+    "key": "decor:concentricSquares",
+    "id": "concentricSquares",
+    "kind": "decoration",
+    "name": "同心方框",
+    "tags": [
+      "graphic",
+      "calm",
+      "editorial"
+    ],
+    "source": "JIZURA",
+    "originalName": "同心四角"
+  },
+  {
+    "key": "decor:triangleSpin",
+    "id": "triangleSpin",
+    "kind": "decoration",
+    "name": "三角",
+    "tags": [
+      "graphic",
+      "pop",
+      "glitch"
+    ],
+    "source": "JIZURA",
+    "originalName": "回転三角"
+  },
+  {
+    "key": "decor:lineBurst",
+    "id": "lineBurst",
+    "kind": "decoration",
+    "name": "放射线",
+    "tags": [
+      "pop",
+      "graphic",
+      "emotional"
+    ],
+    "source": "JIZURA",
+    "originalName": "放射線"
+  },
+  {
+    "key": "decor:plusGrid",
+    "id": "plusGrid",
+    "kind": "decoration",
+    "name": "十字网格",
+    "tags": [
+      "graphic",
+      "editorial",
+      "calm"
+    ],
+    "source": "JIZURA",
+    "originalName": "プラス格子"
+  },
+  {
+    "key": "decor:guides",
+    "id": "guides",
+    "kind": "decoration",
+    "name": "辅助线",
+    "tags": [
+      "editorial",
+      "graphic",
+      "calm"
+    ],
+    "source": "JIZURA",
+    "originalName": "ガイド線"
+  },
+  {
+    "key": "decor:waveLine",
+    "id": "waveLine",
+    "kind": "decoration",
+    "name": "波线",
+    "tags": [
+      "calm",
+      "emotional",
+      "graphic"
+    ],
+    "source": "JIZURA",
+    "originalName": "波線"
+  },
+  {
+    "key": "decor:spiralLine",
+    "id": "spiralLine",
+    "kind": "decoration",
+    "name": "螺旋线",
+    "tags": [
+      "graphic",
+      "pop",
+      "calm"
+    ],
+    "source": "JIZURA",
+    "originalName": "渦巻き"
+  },
+  {
+    "key": "decor:halftonePatch",
+    "id": "halftonePatch",
+    "kind": "decoration",
+    "name": "半调网点",
+    "tags": [
+      "graphic",
+      "pop",
+      "editorial"
+    ],
+    "source": "JIZURA",
+    "originalName": "網点"
+  },
+  {
+    "key": "decor:checkerStrip",
+    "id": "checkerStrip",
+    "kind": "decoration",
+    "name": "棋盘带",
+    "tags": [
+      "pop",
+      "graphic"
+    ],
+    "source": "JIZURA",
+    "originalName": "市松の帯"
+  },
+  {
+    "key": "decor:beatRing",
+    "id": "beatRing",
+    "kind": "decoration",
+    "name": "节拍环",
+    "tags": [
+      "pop",
+      "emotional",
+      "calm"
+    ],
+    "source": "JIZURA",
+    "originalName": "拍の輪"
+  },
+  {
+    "key": "decor:orbitDots",
+    "id": "orbitDots",
+    "kind": "decoration",
+    "name": "轨道点",
+    "tags": [
+      "calm",
+      "emotional",
+      "graphic"
+    ],
+    "source": "JIZURA",
+    "originalName": "周回する点"
+  },
+  {
+    "key": "decor:constellation",
+    "id": "constellation",
+    "kind": "decoration",
+    "name": "星座",
+    "tags": [
+      "calm",
+      "emotional",
+      "editorial"
+    ],
+    "source": "JIZURA",
+    "originalName": "星座"
+  },
+  {
+    "key": "decor:confetti",
+    "id": "confetti",
+    "kind": "decoration",
+    "name": "纸屑",
+    "tags": [
+      "pop",
+      "emotional"
+    ],
+    "source": "JIZURA",
+    "originalName": "紙吹雪"
+  },
+  {
+    "key": "decor:petals",
+    "id": "petals",
+    "kind": "decoration",
+    "name": "花瓣",
+    "tags": [
+      "emotional",
+      "calm",
+      "pop"
+    ],
+    "source": "JIZURA",
+    "originalName": "花びら"
+  },
+  {
+    "key": "decor:rainStreaks",
+    "id": "rainStreaks",
+    "kind": "decoration",
+    "name": "雨丝",
+    "tags": [
+      "emotional",
+      "calm",
+      "glitch"
+    ],
+    "source": "JIZURA",
+    "originalName": "雨の筋"
+  },
+  {
+    "key": "decor:snow",
+    "id": "snow",
+    "kind": "decoration",
+    "name": "雪花",
+    "tags": [
+      "calm",
+      "emotional"
+    ],
+    "source": "JIZURA",
+    "originalName": "雪"
+  },
+  {
+    "key": "decor:lightLeak",
+    "id": "lightLeak",
+    "kind": "decoration",
+    "name": "漏光",
+    "tags": [
+      "emotional",
+      "calm",
+      "pop"
+    ],
+    "source": "JIZURA",
+    "originalName": "光漏れ"
+  },
+  {
+    "key": "decor:bokeh",
+    "id": "bokeh",
+    "kind": "decoration",
+    "name": "光斑",
+    "tags": [
+      "emotional",
+      "calm",
+      "pop"
+    ],
+    "source": "JIZURA",
+    "originalName": "ボケ玉"
+  },
+  {
+    "key": "decor:speedCorner",
+    "id": "speedCorner",
+    "kind": "decoration",
+    "name": "速度线",
+    "tags": [
+      "pop",
+      "emotional",
+      "glitch"
+    ],
+    "source": "JIZURA",
+    "originalName": "集中線"
+  },
+  {
+    "key": "decor:risingParticles",
+    "id": "risingParticles",
+    "kind": "decoration",
+    "name": "上升粒子",
+    "tags": [
+      "emotional",
+      "calm",
+      "glitch"
+    ],
+    "source": "JIZURA",
+    "originalName": "立ち上る粒"
+  },
+  {
+    "key": "decor:twinkle",
+    "id": "twinkle",
+    "kind": "decoration",
+    "name": "闪光",
+    "tags": [
+      "pop",
+      "emotional",
+      "calm"
+    ],
+    "source": "JIZURA",
+    "originalName": "きらめき"
+  },
+  {
+    "key": "decor:brushStroke",
+    "id": "brushStroke",
+    "kind": "decoration",
+    "name": "笔触",
+    "tags": [
+      "emotional",
+      "editorial",
+      "pop"
+    ],
+    "source": "JIZURA",
+    "originalName": "筆の払い"
+  },
+  {
+    "key": "decor:tapePieces",
+    "id": "tapePieces",
+    "kind": "decoration",
+    "name": "胶带",
+    "tags": [
+      "pop",
+      "emotional",
+      "editorial"
+    ],
+    "source": "JIZURA",
+    "originalName": "マスキングテープ"
+  },
+  {
+    "key": "decor:scribbleCircle",
+    "id": "scribbleCircle",
+    "kind": "decoration",
+    "name": "手绘圈",
+    "tags": [
+      "pop",
+      "emotional",
+      "editorial"
+    ],
+    "source": "JIZURA",
+    "originalName": "手描きの囲み"
+  },
+  {
+    "key": "decor:scribbleUnder",
+    "id": "scribbleUnder",
+    "kind": "decoration",
+    "name": "手绘下划线",
+    "tags": [
+      "pop",
+      "emotional",
+      "editorial"
+    ],
+    "source": "JIZURA",
+    "originalName": "手描き下線"
+  },
+  {
+    "key": "decor:crossOut",
+    "id": "crossOut",
+    "kind": "decoration",
+    "name": "涂改线",
+    "tags": [
+      "editorial",
+      "emotional"
+    ],
+    "source": "JIZURA",
+    "originalName": "推敲の走り書き"
+  },
+  {
+    "key": "decor:highlightMark",
+    "id": "highlightMark",
+    "kind": "decoration",
+    "name": "荧光笔",
+    "tags": [
+      "pop",
+      "editorial",
+      "emotional"
+    ],
+    "source": "JIZURA",
+    "originalName": "蛍光マーカー"
+  },
+  {
+    "key": "decor:heartsStars",
+    "id": "heartsStars",
+    "kind": "decoration",
+    "name": "心与星",
+    "tags": [
+      "pop",
+      "emotional"
+    ],
+    "source": "JIZURA",
+    "originalName": "ハートと星"
+  },
+  {
+    "key": "decor:watermarkKanji",
+    "id": "watermarkKanji",
+    "kind": "decoration",
+    "name": "汉字水印",
+    "tags": [
+      "editorial",
+      "emotional",
+      "calm"
+    ],
+    "source": "JIZURA",
+    "originalName": "透かし大漢字"
+  },
+  {
+    "key": "decor:verticalStrip",
+    "id": "verticalStrip",
+    "kind": "decoration",
+    "name": "竖排字带",
+    "tags": [
+      "editorial",
+      "calm",
+      "emotional"
+    ],
+    "source": "JIZURA",
+    "originalName": "縦書き帯"
+  },
+  {
+    "key": "decor:romajiLine",
+    "id": "romajiLine",
+    "kind": "decoration",
+    "name": "罗马字",
+    "tags": [
+      "editorial",
+      "calm",
+      "graphic"
+    ],
+    "source": "JIZURA",
+    "originalName": "ローマ字"
+  },
+  {
+    "key": "decor:bracketsJP",
+    "id": "bracketsJP",
+    "kind": "decoration",
+    "name": "日式括号",
+    "tags": [
+      "pop",
+      "graphic",
+      "editorial"
+    ],
+    "source": "JIZURA",
+    "originalName": "隅付き括弧"
+  },
+  {
+    "key": "decor:seal",
+    "id": "seal",
+    "kind": "decoration",
+    "name": "印章",
+    "tags": [
+      "editorial",
+      "emotional",
+      "calm"
+    ],
+    "source": "JIZURA",
+    "originalName": "落款"
+  },
+  {
+    "key": "decor:kamon",
+    "id": "kamon",
+    "kind": "decoration",
+    "name": "家纹",
+    "tags": [
+      "editorial",
+      "calm",
+      "emotional"
+    ],
+    "source": "JIZURA",
+    "originalName": "家紋"
+  },
+  {
+    "key": "decor:seigaiha",
+    "id": "seigaiha",
+    "kind": "decoration",
+    "name": "青海波",
+    "tags": [
+      "calm",
+      "emotional",
+      "editorial"
+    ],
+    "source": "JIZURA",
+    "originalName": "青海波"
+  },
+  {
+    "key": "decor:asanoha",
+    "id": "asanoha",
+    "kind": "decoration",
+    "name": "麻叶纹",
+    "tags": [
+      "calm",
+      "editorial",
+      "emotional"
+    ],
+    "source": "JIZURA",
+    "originalName": "麻の葉"
+  },
+  {
+    "key": "decor:hanabi",
+    "id": "hanabi",
+    "kind": "decoration",
+    "name": "花火",
+    "tags": [
+      "emotional",
+      "pop",
+      "calm"
+    ],
+    "source": "JIZURA",
+    "originalName": "花火"
+  },
+  {
+    "key": "decor:chochin",
+    "id": "chochin",
+    "kind": "decoration",
+    "name": "提灯",
+    "tags": [
+      "emotional",
+      "pop",
+      "calm"
+    ],
+    "source": "JIZURA",
+    "originalName": "提灯"
+  },
+  {
+    "key": "decor:shimenawa",
+    "id": "shimenawa",
+    "kind": "decoration",
+    "name": "注连绳",
+    "tags": [
+      "editorial",
+      "emotional",
+      "calm"
+    ],
+    "source": "JIZURA",
+    "originalName": "注連縄"
+  },
+  {
+    "key": "decor:sensu",
+    "id": "sensu",
+    "kind": "decoration",
+    "name": "折扇",
+    "tags": [
+      "emotional",
+      "editorial",
+      "calm"
+    ],
+    "source": "JIZURA",
+    "originalName": "扇"
+  },
+  {
+    "key": "decor:tsukiKumo",
+    "id": "tsukiKumo",
+    "kind": "decoration",
+    "name": "云月",
+    "tags": [
+      "emotional",
+      "calm",
+      "editorial"
+    ],
+    "source": "JIZURA",
+    "originalName": "月に雲"
+  },
+  {
+    "key": "decor:momiji",
+    "id": "momiji",
+    "kind": "decoration",
+    "name": "枫叶",
+    "tags": [
+      "emotional",
+      "calm"
+    ],
+    "source": "JIZURA",
+    "originalName": "紅葉"
+  },
+  {
+    "key": "decor:namiGashira",
+    "id": "namiGashira",
+    "kind": "decoration",
+    "name": "浪头",
+    "tags": [
+      "emotional",
+      "editorial",
+      "graphic"
+    ],
+    "source": "JIZURA",
+    "originalName": "波頭"
+  },
+  {
+    "key": "decor:kasumi",
+    "id": "kasumi",
+    "kind": "decoration",
+    "name": "霞雾",
+    "tags": [
+      "calm",
+      "emotional",
+      "editorial"
+    ],
+    "source": "JIZURA",
+    "originalName": "霞"
+  },
+  {
+    "key": "decor:hexGrid",
+    "id": "hexGrid",
+    "kind": "decoration",
+    "name": "六角网格",
+    "tags": [
+      "glitch",
+      "graphic"
+    ],
+    "source": "JIZURA",
+    "originalName": "六角格子"
+  },
+  {
+    "key": "decor:spectrumRing",
+    "id": "spectrumRing",
+    "kind": "decoration",
+    "name": "频谱环",
+    "tags": [
+      "glitch",
+      "pop",
+      "graphic"
+    ],
+    "source": "JIZURA",
+    "originalName": "円形スペクトラム"
+  },
+  {
+    "key": "decor:dataColumns",
+    "id": "dataColumns",
+    "kind": "decoration",
+    "name": "数据列",
+    "tags": [
+      "glitch",
+      "editorial",
+      "graphic"
+    ],
+    "source": "JIZURA",
+    "originalName": "データ列"
+  },
+  {
+    "key": "decor:spinner",
+    "id": "spinner",
+    "kind": "decoration",
+    "name": "旋转标记",
+    "tags": [
+      "glitch",
+      "pop",
+      "graphic"
+    ],
+    "source": "JIZURA",
+    "originalName": "読み込み"
+  },
+  {
+    "key": "decor:headingTape",
+    "id": "headingTape",
+    "kind": "decoration",
+    "name": "方位标尺",
+    "tags": [
+      "glitch",
+      "graphic",
+      "editorial"
+    ],
+    "source": "JIZURA",
+    "originalName": "方位テープ"
+  },
+  {
+    "key": "decor:glyphLock",
+    "id": "glyphLock",
+    "kind": "decoration",
+    "name": "字符锁定",
+    "tags": [
+      "glitch",
+      "graphic",
+      "editorial"
+    ],
+    "source": "JIZURA",
+    "originalName": "文字ロック"
+  },
+  {
+    "key": "decor:atomOrbit",
+    "id": "atomOrbit",
+    "kind": "decoration",
+    "name": "原子轨道",
+    "tags": [
+      "graphic",
+      "glitch",
+      "calm"
+    ],
+    "source": "JIZURA",
+    "originalName": "原子軌道"
+  },
+  {
+    "key": "decor:sonarArcs",
+    "id": "sonarArcs",
+    "kind": "decoration",
+    "name": "声纳",
+    "tags": [
+      "pop",
+      "emotional",
+      "graphic"
+    ],
+    "source": "JIZURA",
+    "originalName": "音波"
+  },
+  {
+    "key": "decor:circuit",
+    "id": "circuit",
+    "kind": "decoration",
+    "name": "电路",
+    "tags": [
+      "glitch",
+      "graphic"
+    ],
+    "source": "JIZURA",
+    "originalName": "回路"
+  },
+  {
+    "key": "decor:swatches",
+    "id": "swatches",
+    "kind": "decoration",
+    "name": "印刷色条",
+    "tags": [
+      "editorial",
+      "graphic"
+    ],
+    "source": "JIZURA",
+    "originalName": "色見本"
+  },
+  {
+    "key": "decor:ruledLines",
+    "id": "ruledLines",
+    "kind": "decoration",
+    "name": "横格纸",
+    "tags": [
+      "editorial",
+      "calm",
+      "emotional"
+    ],
+    "source": "JIZURA",
+    "originalName": "罫線ノート"
+  },
+  {
+    "key": "decor:registration",
+    "id": "registration",
+    "kind": "decoration",
+    "name": "套色标记",
+    "tags": [
+      "editorial",
+      "graphic",
+      "glitch"
+    ],
+    "source": "JIZURA",
+    "originalName": "見当合わせ"
+  },
+  {
+    "key": "decor:punchHoles",
+    "id": "punchHoles",
+    "kind": "decoration",
+    "name": "打孔",
+    "tags": [
+      "editorial",
+      "calm",
+      "graphic"
+    ],
+    "source": "JIZURA",
+    "originalName": "パンチ穴"
+  },
+  {
+    "key": "decor:staple",
+    "id": "staple",
+    "kind": "decoration",
+    "name": "订书钉",
+    "tags": [
+      "editorial",
+      "pop",
+      "emotional"
+    ],
+    "source": "JIZURA",
+    "originalName": "ホチキス"
+  },
+  {
+    "key": "decor:paperClip",
+    "id": "paperClip",
+    "kind": "decoration",
+    "name": "回形针",
+    "tags": [
+      "editorial",
+      "pop",
+      "emotional"
+    ],
+    "source": "JIZURA",
+    "originalName": "クリップ"
+  },
+  {
+    "key": "decor:indexTabs",
+    "id": "indexTabs",
+    "kind": "decoration",
+    "name": "索引标签",
+    "tags": [
+      "editorial",
+      "pop",
+      "graphic"
+    ],
+    "source": "JIZURA",
+    "originalName": "見出しタブ"
+  },
+  {
+    "key": "decor:vines",
+    "id": "vines",
+    "kind": "decoration",
+    "name": "藤蔓",
+    "tags": [
+      "emotional",
+      "calm",
+      "pop"
+    ],
+    "source": "JIZURA",
+    "originalName": "蔓"
+  },
+  {
+    "key": "decor:cloudPuffs",
+    "id": "cloudPuffs",
+    "kind": "decoration",
+    "name": "云朵",
+    "tags": [
+      "calm",
+      "pop",
+      "emotional"
+    ],
+    "source": "JIZURA",
+    "originalName": "雲"
+  },
+  {
+    "key": "decor:starField",
+    "id": "starField",
+    "kind": "decoration",
+    "name": "星空",
+    "tags": [
+      "calm",
+      "emotional"
+    ],
+    "source": "JIZURA",
+    "originalName": "星空"
+  },
+  {
+    "key": "decor:moonPhases",
+    "id": "moonPhases",
+    "kind": "decoration",
+    "name": "月相",
+    "tags": [
+      "calm",
+      "emotional",
+      "editorial"
+    ],
+    "source": "JIZURA",
+    "originalName": "月齢"
+  },
+  {
+    "key": "decor:sunRays",
+    "id": "sunRays",
+    "kind": "decoration",
+    "name": "阳光",
+    "tags": [
+      "emotional",
+      "pop",
+      "calm"
+    ],
+    "source": "JIZURA",
+    "originalName": "陽射し"
+  },
+  {
+    "key": "decor:rainRipples",
+    "id": "rainRipples",
+    "kind": "decoration",
+    "name": "雨涟",
+    "tags": [
+      "calm",
+      "emotional"
+    ],
+    "source": "JIZURA",
+    "originalName": "雨の波紋"
+  },
+  {
+    "key": "decor:bubbles",
+    "id": "bubbles",
+    "kind": "decoration",
+    "name": "气泡",
+    "tags": [
+      "pop",
+      "emotional",
+      "calm"
+    ],
+    "source": "JIZURA",
+    "originalName": "シャボン玉"
+  },
+  {
+    "key": "decor:smoke",
+    "id": "smoke",
+    "kind": "decoration",
+    "name": "烟雾",
+    "tags": [
+      "calm",
+      "emotional",
+      "editorial"
+    ],
+    "source": "JIZURA",
+    "originalName": "煙"
+  },
+  {
+    "key": "decor:dandelion",
+    "id": "dandelion",
+    "kind": "decoration",
+    "name": "蒲公英",
+    "tags": [
+      "calm",
+      "emotional"
+    ],
+    "source": "JIZURA",
+    "originalName": "綿毛"
+  },
+  {
+    "key": "decor:fireflies",
+    "id": "fireflies",
+    "kind": "decoration",
+    "name": "萤火",
+    "tags": [
+      "emotional",
+      "calm"
+    ],
+    "source": "JIZURA",
+    "originalName": "蛍"
+  },
+  {
+    "key": "decor:memphis",
+    "id": "memphis",
+    "kind": "decoration",
+    "name": "孟菲斯图形",
+    "tags": [
+      "pop",
+      "graphic"
+    ],
+    "source": "JIZURA",
+    "originalName": "メンフィス"
+  },
+  {
+    "key": "decor:zigzagRibbon",
+    "id": "zigzagRibbon",
+    "kind": "decoration",
+    "name": "折线丝带",
+    "tags": [
+      "pop",
+      "graphic"
+    ],
+    "source": "JIZURA",
+    "originalName": "ジグザグリボン"
+  },
+  {
+    "key": "decor:polkaPatch",
+    "id": "polkaPatch",
+    "kind": "decoration",
+    "name": "波点",
+    "tags": [
+      "pop",
+      "graphic",
+      "calm"
+    ],
+    "source": "JIZURA",
+    "originalName": "水玉"
+  },
+  {
+    "key": "decor:stripeCircle",
+    "id": "stripeCircle",
+    "kind": "decoration",
+    "name": "条纹圆",
+    "tags": [
+      "graphic",
+      "pop"
+    ],
+    "source": "JIZURA",
+    "originalName": "縞の円"
+  },
+  {
+    "key": "decor:decoCorners",
+    "id": "decoCorners",
+    "kind": "decoration",
+    "name": "装饰边角",
+    "tags": [
+      "editorial",
+      "graphic",
+      "calm"
+    ],
+    "source": "JIZURA",
+    "originalName": "装飾コーナー"
+  },
+  {
+    "key": "decor:halfCircles",
+    "id": "halfCircles",
+    "kind": "decoration",
+    "name": "半圆叠层",
+    "tags": [
+      "graphic",
+      "pop",
+      "calm"
+    ],
+    "source": "JIZURA",
+    "originalName": "半円の積層"
+  },
+  {
+    "key": "decor:loopArrows",
+    "id": "loopArrows",
+    "kind": "decoration",
+    "name": "循环箭头",
+    "tags": [
+      "graphic",
+      "pop",
+      "editorial"
+    ],
+    "source": "JIZURA",
+    "originalName": "循環矢印"
+  },
+  {
+    "key": "decor:starburst",
+    "id": "starburst",
+    "kind": "decoration",
+    "name": "星芒",
+    "tags": [
+      "pop",
+      "graphic"
+    ],
+    "source": "JIZURA",
+    "originalName": "スターバースト"
+  },
+  {
+    "key": "decor:tally",
+    "id": "tally",
+    "kind": "decoration",
+    "name": "计数刻痕",
+    "tags": [
+      "editorial",
+      "pop",
+      "emotional"
+    ],
+    "source": "JIZURA",
+    "originalName": "正の字"
+  },
+  {
+    "key": "decor:cursorClick",
+    "id": "cursorClick",
+    "kind": "decoration",
+    "name": "鼠标指针",
+    "tags": [
+      "pop",
+      "graphic",
+      "glitch"
+    ],
+    "source": "JIZURA",
+    "originalName": "カーソル"
+  },
+  {
+    "key": "decor:windowChrome",
+    "id": "windowChrome",
+    "kind": "decoration",
+    "name": "窗口边框",
+    "tags": [
+      "pop",
+      "graphic",
+      "glitch"
+    ],
+    "source": "JIZURA",
+    "originalName": "ウィンドウ"
+  },
+  {
+    "key": "decor:progressBar",
+    "id": "progressBar",
+    "kind": "decoration",
+    "name": "进度条",
+    "tags": [
+      "pop",
+      "graphic",
+      "glitch"
+    ],
+    "source": "JIZURA",
+    "originalName": "読み込みバー"
+  },
+  {
+    "key": "decor:toggleSwitch",
+    "id": "toggleSwitch",
+    "kind": "decoration",
+    "name": "开关",
+    "tags": [
+      "pop",
+      "graphic"
+    ],
+    "source": "JIZURA",
+    "originalName": "トグル"
+  },
+  {
+    "key": "decor:notifBell",
+    "id": "notifBell",
+    "kind": "decoration",
+    "name": "铃铛",
+    "tags": [
+      "pop",
+      "emotional"
+    ],
+    "source": "JIZURA",
+    "originalName": "通知"
+  },
+  {
+    "key": "decor:likeCounter",
+    "id": "likeCounter",
+    "kind": "decoration",
+    "name": "点赞",
+    "tags": [
+      "pop",
+      "emotional"
+    ],
+    "source": "JIZURA",
+    "originalName": "いいね"
+  },
+  {
+    "key": "decor:mediaControls",
+    "id": "mediaControls",
+    "kind": "decoration",
+    "name": "播放控件",
+    "tags": [
+      "pop",
+      "graphic",
+      "emotional"
+    ],
+    "source": "JIZURA",
+    "originalName": "再生ボタン"
+  },
+  {
+    "key": "decor:volumeBars",
+    "id": "volumeBars",
+    "kind": "decoration",
+    "name": "音量条",
+    "tags": [
+      "pop",
+      "glitch",
+      "graphic"
+    ],
+    "source": "JIZURA",
+    "originalName": "音量"
+  },
+  {
+    "key": "decor:musicNotes",
+    "id": "musicNotes",
+    "kind": "decoration",
+    "name": "音符",
+    "tags": [
+      "pop",
+      "emotional",
+      "calm"
+    ],
+    "source": "JIZURA",
+    "originalName": "音符"
+  },
+  {
+    "key": "decor:hrScratches",
+    "id": "hrScratches",
+    "kind": "decoration",
+    "name": "划痕",
+    "tags": [
+      "horror",
+      "glitch"
+    ],
+    "source": "JIZURA",
+    "originalName": "引っ掻き傷"
+  },
+  {
+    "key": "decor:hrSigil",
+    "id": "hrSigil",
+    "kind": "decoration",
+    "name": "魔法阵",
+    "tags": [
+      "horror",
+      "graphic"
+    ],
+    "source": "JIZURA",
+    "originalName": "魔法陣"
+  },
+  {
+    "key": "decor:hrWatchEye",
+    "id": "hrWatchEye",
+    "kind": "decoration",
+    "name": "眼睛",
+    "tags": [
+      "horror",
+      "graphic"
+    ],
+    "source": "JIZURA",
+    "originalName": "見ている目"
+  },
+  {
+    "key": "decor:hrStaticPatch",
+    "id": "hrStaticPatch",
+    "kind": "decoration",
+    "name": "噪点碎片",
+    "tags": [
+      "horror",
+      "glitch"
+    ],
+    "source": "JIZURA",
+    "originalName": "砂嵐の欠片"
+  },
+  {
+    "key": "decor:hrDustBeam",
+    "id": "hrDustBeam",
+    "kind": "decoration",
+    "name": "光束尘埃",
+    "tags": [
+      "horror",
+      "calm",
+      "emotional"
+    ],
+    "source": "JIZURA",
+    "originalName": "光の筋と埃"
+  },
+  {
+    "key": "decor:hrDrips",
+    "id": "hrDrips",
+    "kind": "decoration",
+    "name": "墨滴",
+    "tags": [
+      "horror",
+      "emotional"
+    ],
+    "source": "JIZURA",
+    "originalName": "垂れる墨"
+  },
+  {
+    "key": "decor:hrCracks",
+    "id": "hrCracks",
+    "kind": "decoration",
+    "name": "裂痕",
+    "tags": [
+      "horror",
+      "graphic",
+      "glitch"
+    ],
+    "source": "JIZURA",
+    "originalName": "ひび割れ"
+  },
+  {
+    "key": "decor:knSpeedTrail",
+    "id": "knSpeedTrail",
+    "kind": "decoration",
+    "name": "轨迹线",
+    "tags": [
+      "pop",
+      "graphic",
+      "glitch"
+    ],
+    "source": "JIZURA",
+    "originalName": "追従スピード線"
+  },
+  {
+    "key": "decor:knWordTicks",
+    "id": "knWordTicks",
+    "kind": "decoration",
+    "name": "词语计数",
+    "tags": [
+      "graphic",
+      "editorial",
+      "pop"
+    ],
+    "source": "JIZURA",
+    "originalName": "語カウンター"
+  },
+  {
+    "key": "decor:tyColophon",
+    "id": "tyColophon",
+    "kind": "decoration",
+    "name": "书籍题记",
+    "tags": [
+      "editorial",
+      "calm",
+      "graphic"
+    ],
+    "source": "JIZURA",
+    "originalName": "奥付"
+  },
+  {
+    "key": "decor:tyRunningHead",
+    "id": "tyRunningHead",
+    "kind": "decoration",
+    "name": "页眉页码",
+    "tags": [
+      "editorial",
+      "calm"
+    ],
+    "source": "JIZURA",
+    "originalName": "柱とノンブル"
+  },
+  {
+    "key": "decor:tyGlyphBody",
+    "id": "tyGlyphBody",
+    "kind": "decoration",
+    "name": "字形网格",
+    "tags": [
+      "editorial",
+      "graphic",
+      "calm"
+    ],
+    "source": "JIZURA",
+    "originalName": "字割り線"
+  },
+  {
+    "key": "decor:tyTextRule",
+    "id": "tyTextRule",
+    "kind": "decoration",
+    "name": "文字线",
+    "tags": [
+      "editorial",
+      "graphic",
+      "calm"
+    ],
+    "source": "JIZURA",
+    "originalName": "文字罫"
+  },
+  {
+    "key": "decor:tyTypeScale",
+    "id": "tyTypeScale",
+    "kind": "decoration",
+    "name": "字号标本",
+    "tags": [
+      "editorial",
+      "graphic"
+    ],
+    "source": "JIZURA",
+    "originalName": "級数見本"
+  },
+  {
+    "key": "decor:tyBigPunct",
+    "id": "tyBigPunct",
+    "kind": "decoration",
+    "name": "大标点",
+    "tags": [
+      "editorial",
+      "emotional",
+      "graphic"
+    ],
+    "source": "JIZURA",
+    "originalName": "大きな約物"
+  }
+]

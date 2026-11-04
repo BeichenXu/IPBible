@@ -1,0 +1,181 @@
+{
+  "verifiedOn": "2026-11-04",
+  "assets": [
+    {
+      "path": "examples/spring/spring.webp",
+      "sourceUrl": "https://studio.blender.org/files/dd/dda348e06e2b9b19d144544c6c4ac793/dda348e06e2b9b19d144544c6c4ac793.png",
+      "sourcePage": "https://studio.blender.org/blog/updated-spring-characters/",
+      "license": "CC BY 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+      "credit": "© Blender Foundation | studio.blender.org/spring",
+      "originalDimensions": [
+        3072,
+        1920
+      ],
+      "originalSha256": "d5c8d04aa713c89c4bb539e2669c74a58970eae36f7553e18075ee94fa74ce10",
+      "sha256": "1ce30fce52e40cdc8274fa80ac567bc2d24664fdd0420ed2a77da8f5bbef911d",
+      "transformation": "Resized to maximum 1600 px; WebP quality 90. No crop, repainting or generative editing.",
+      "bytes": 121622
+    },
+    {
+      "path": "examples/spring/autumn.webp",
+      "sourceUrl": "https://studio.blender.org/files/66/66e64d7f91e54efeec75dfe37792a1a2/66e64d7f91e54efeec75dfe37792a1a2.png",
+      "sourcePage": "https://studio.blender.org/blog/updated-spring-characters/",
+      "license": "CC BY 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+      "credit": "© Blender Foundation | studio.blender.org/spring",
+      "originalDimensions": [
+        3414,
+        1920
+      ],
+      "originalSha256": "84dd9c0816461ec0c4f81df65b424bce27ebd5d7c62b47b968f7aca3613d15ae",
+      "sha256": "b58fb5c1a5ed924f8790cb253ac709607c6366812eee7b9422a71ffdd991666a",
+      "transformation": "Resized to maximum 1600 px; WebP quality 90. No crop, repainting or generative editing.",
+      "bytes": 94318
+    },
+    {
+      "path": "examples/spring/alpha.webp",
+      "sourceUrl": "https://studio.blender.org/files/cb/cb8ad7abaea21728e620753d9502f360/cb8ad7abaea21728e620753d9502f360.png",
+      "sourcePage": "https://studio.blender.org/blog/updated-spring-characters/",
+      "license": "CC BY 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+      "credit": "© Blender Foundation | studio.blender.org/spring",
+      "originalDimensions": [
+        3414,
+        1920
+      ],
+      "originalSha256": "6d92dfa42dd568a64ebe735d151024e596c348022e3570b99d292cf29fafff02",
+      "sha256": "05afda523fa9b99c150818927e916b66771497b6836b4753e2772c93ff657fbc",
+      "transformation": "Resized to maximum 1600 px; WebP quality 90. No crop, repainting or generative editing.",
+      "bytes": 183762
+    },
+    {
+      "path": "examples/spring/forest.webp",
+      "sourceUrl": "https://studio.blender.org/files/public/header/project/e5/0f/e50f13c31a485f3a05d4983f1b4ab7ee.png",
+      "sourcePage": "https://studio.blender.org/projects/spring/",
+      "license": "CC BY 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+      "credit": "© Blender Foundation | studio.blender.org/spring",
+      "originalDimensions": [
+        1920,
+        650
+      ],
+      "originalSha256": "4be70d1908a74b74c099ff5ff476ff359522427762b6e275fcac7bfb0b61a31f",
+      "sha256": "f8663957ea0ef638241b8f0c89c325fbad6ba8a7a3afa8856e4373c9921fb7d7",
+      "transformation": "Resized to maximum 1600 px; WebP quality 90. No crop, repainting or generative editing.",
+      "bytes": 62092
+    },
+    {
+      "path": "examples/sintel/sintel.webp",
+      "sourceUrl": "https://durian.blender.org/wp-content/uploads/2009/10/sintel-wallpaper-sintel.jpg",
+      "sourcePage": "https://durian.blender.org/gallery/",
+      "license": "CC BY 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/3.0/",
+      "credit": "© Blender Foundation / durian.blender.org · Artwork: David Revoy",
+      "originalDimensions": [
+        1920,
+        1200
+      ],
+      "originalSha256": "6c495b1f8d64d4e64a27657ddc3e470e50ecfe5be725ef8a408922bdcbd8419a",
+      "sha256": "b5e3cf515623875144988775380e973491308a3be936749660ef539a8645bf57",
+      "transformation": "Resized to maximum 1600 px; WebP quality 90. No crop, repainting or generative editing.",
+      "bytes": 166978
+    },
+    {
+      "path": "examples/sintel/character.webp",
+      "sourceUrl": "https://durian.blender.org/wp-content/uploads/2009/11/sintel_approved.png",
+      "sourcePage": "https://durian.blender.org/gallery/",
+      "license": "CC BY 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/3.0/",
+      "credit": "© Blender Foundation / durian.blender.org",
+      "originalDimensions": [
+        720,
+        481
+      ],
+      "originalSha256": "ba3a9a6bee866255c12f67bbe92cf9188b758d4b6af7610d463d992789fc506e",
+      "sha256": "ab74a7187c674d220c7e0d882a2333ee2db0bebd5997d735dc945d29346b1223",
+      "transformation": "Resized to maximum 1600 px; WebP quality 90. No crop, repainting or generative editing.",
+      "bytes": 27314
+    },
+    {
+      "path": "examples/sintel/dragon.webp",
+      "sourceUrl": "https://durian.blender.org/wp-content/uploads/2009/12/dragonadult_revised.png",
+      "sourcePage": "https://durian.blender.org/gallery/",
+      "license": "CC BY 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/3.0/",
+      "credit": "© Blender Foundation / durian.blender.org",
+      "originalDimensions": [
+        2000,
+        734
+      ],
+      "originalSha256": "17c62eeaaafa5ec78b97773db3c5deca4a70440f3c27bdf45250e25d84b78d7a",
+      "sha256": "10cc51146ad9ff663f343c1eb2b51ff3773fda3dda99fa5d8959c163d035e892",
+      "transformation": "Resized to maximum 1600 px; WebP quality 90. No crop, repainting or generative editing.",
+      "bytes": 29166
+    },
+    {
+      "path": "examples/sintel/city.webp",
+      "sourceUrl": "https://durian.blender.org/wp-content/uploads/2009/09/wip-town-concept_003-painting.jpg",
+      "sourcePage": "https://durian.blender.org/gallery/",
+      "license": "CC BY 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/3.0/",
+      "credit": "© Blender Foundation / durian.blender.org · Concept art: David Revoy",
+      "originalDimensions": [
+        1280,
+        671
+      ],
+      "originalSha256": "c4d45acc28b70db4b939387cce207ee9325508bd18ac2a9e44fdf5c2a50ecefe",
+      "sha256": "63063474d91744c35d719fc6e8cb353255a9b2820aec97bbc8b71525ee544e22",
+      "transformation": "Resized to maximum 1600 px; WebP quality 90. No crop, repainting or generative editing.",
+      "bytes": 138990
+    },
+    {
+      "path": "examples/big-buck-bunny/bunny.webp",
+      "sourceUrl": "https://peach.blender.org/wp-content/uploads/bunny-bow.png",
+      "sourcePage": "https://peach.blender.org/media-gallery/",
+      "license": "CC BY 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/3.0/",
+      "credit": "© 2008 Blender Foundation / www.bigbuckbunny.org",
+      "originalDimensions": [
+        1920,
+        1080
+      ],
+      "originalSha256": "b4bfbbc7993413e7e9d7e8156b694e13831d361d14fb0f78bfe9fe9e96f55b26",
+      "sha256": "3b3b5d3cacfd43d5d07fcba078b63099d1692a3d4ff720e8f105fa656879340c",
+      "transformation": "Resized to maximum 1600 px; WebP quality 90. No crop, repainting or generative editing.",
+      "bytes": 90774
+    },
+    {
+      "path": "examples/big-buck-bunny/rodents.webp",
+      "sourceUrl": "https://peach.blender.org/wp-content/uploads/rodents.png",
+      "sourcePage": "https://peach.blender.org/media-gallery/",
+      "license": "CC BY 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/3.0/",
+      "credit": "© 2008 Blender Foundation / www.bigbuckbunny.org",
+      "originalDimensions": [
+        1920,
+        1080
+      ],
+      "originalSha256": "f876a31a67fc60fc8496b94e5ae897b74358d3917f944fd69c238a920b7ccd00",
+      "sha256": "6091cfd93bf2fbc921da906f4a6ed03cdae8e0c2c747016221f9e9eaac4b2e56",
+      "transformation": "Resized to maximum 1600 px; WebP quality 90. No crop, repainting or generative editing.",
+      "bytes": 196874
+    },
+    {
+      "path": "examples/big-buck-bunny/forest.webp",
+      "sourceUrl": "https://peach.blender.org/wp-content/uploads/its-a-trap.png",
+      "sourcePage": "https://peach.blender.org/media-gallery/",
+      "license": "CC BY 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/3.0/",
+      "credit": "© 2008 Blender Foundation / www.bigbuckbunny.org",
+      "originalDimensions": [
+        1920,
+        1080
+      ],
+      "originalSha256": "06f7c3f47f62320a8fcd0c5379fb4f0e19f86e95918944141158a53949105e29",
+      "sha256": "8237d0bdef64d60bdeccb54d1c623fe65856cdabc843518071d9e3b89fb9b560",
+      "transformation": "Resized to maximum 1600 px; WebP quality 90. No crop, repainting or generative editing.",
+      "bytes": 361362
+    }
+  ]
+}

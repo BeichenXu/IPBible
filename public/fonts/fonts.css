@@ -1,0 +1,19 @@
+/* Unmodified local font copies from CardLab's pinned font vendor set.
+ * Noto Sans SC: SIL OFL 1.1 (NotoSansSC-OFL.txt).
+ * Noto Serif JP: SIL OFL 1.1 (NotoSerifJP-OFL.txt).
+ * Serif JP covers common Han characters; use Noto Sans SC as the next fallback
+ * for simplified characters absent from the Japanese cmap. No Google requests. */
+@font-face {
+  font-family: 'Noto Sans SC';
+  src: url('./NotoSansSC.woff2') format('woff2');
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Noto Serif JP';
+  src: url('./NotoSerifJP.woff2') format('woff2');
+  font-style: normal;
+  font-weight: 200 900;
+  font-display: swap;
+}

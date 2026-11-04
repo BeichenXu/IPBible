@@ -1,0 +1,19 @@
+{
+  "jizuraCommit": "fc16bfe43ea4a6c25a21f1caf04d17326de14f00",
+  "loadedModules": 37,
+  "adaptedMotifs": 195,
+  "palettes": 27,
+  "failures": [],
+  "blank": [
+    "decor:tyGlyphBody"
+  ],
+  "repaired": [
+    {
+      "key": "decor:tyGlyphBody",
+      "nonzero": 7813,
+      "note": "Horizontal glyph anchor needed by this upstream motif."
+    }
+  ],
+  "finalPassedMotifs": 195,
+  "scope": "Headless Chromium canvas adapter render checks at 400x560, not app/TEST acceptance"
+}
