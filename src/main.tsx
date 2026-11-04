@@ -1,83 +1,2040 @@
-import React,{useEffect,useRef,useState} from 'react';
-import {createRoot} from 'react-dom/client';
-import {BookOpen,Plus,Upload,ArrowLeft,Download,Undo2,Redo2,Trash2,Layers,Image as ImageIcon,Type,Lock,Unlock,ChevronUp,ChevronDown,ChevronLeft,ChevronRight,RefreshCw,Globe,Check,X,Copy,Menu,FileText,Settings2,Eye} from 'lucide-react';
-import {W,H,uid,blankBook,kindNames,roleNames,type Asset,type Book,type Example,type Page,type Kind,type Element,type Role} from './model';
-import {createPage,generateBook,regeneratePage,text} from './engine';
-import {importFile,loadExample} from './import';
-import {renderPage,overflowing} from './render';
-import {listBooks,saveBook,deleteBook,projectBlob,readProject,download} from './storage';
-import {exportPDF,exportReader,pageImages} from './export';
-import './style.css';
-import {MotifPicker} from './MotifPicker';
+import React, { useEffect, useRef, useState } from "react";
+import { createRoot } from "react-dom/client";
+import {
+  BookOpen,
+  Plus,
+  Upload,
+  ArrowLeft,
+  Download,
+  Undo2,
+  Redo2,
+  Trash2,
+  Layers,
+  Image as ImageIcon,
+  Type,
+  Lock,
+  Unlock,
+  ChevronUp,
+  ChevronDown,
+  ChevronLeft,
+  ChevronRight,
+  RefreshCw,
+  Globe,
+  Check,
+  X,
+  Copy,
+  Menu,
+  FileText,
+  Settings2,
+  Eye,
+} from "lucide-react";
+import {
+  W,
+  H,
+  uid,
+  blankBook,
+  kindNames,
+  roleNames,
+  type Asset,
+  type Book,
+  type Example,
+  type Page,
+  type Kind,
+  type Element,
+  type Role,
+} from "./model";
+import { createPage, generateBook, regeneratePage, text } from "./engine";
+import { importFile, loadExample } from "./import";
+import { renderPage, overflowing } from "./render";
+import {
+  listBooks,
+  saveBook,
+  deleteBook,
+  projectBlob,
+  readProject,
+  download,
+} from "./storage";
+import { exportPDF, exportReader, pageImages } from "./export";
+import "./style.css";
+import { MotifPicker } from "./MotifPicker";
 
-function Preview({book,page,className='',onPointerDown}:{book:Book;page:Page;className?:string;onPointerDown?:(e:React.PointerEvent<HTMLCanvasElement>)=>void}){const ref=useRef<HTMLCanvasElement>(null);useEffect(()=>{let active=true;const staging=document.createElement('canvas');renderPage(staging,book,page,1).then(()=>{if(active&&ref.current){ref.current.width=W;ref.current.height=H;ref.current.getContext('2d')!.drawImage(staging,0,0);}}).catch(()=>{});return()=>{active=false;};},[book,page]);return <canvas ref={ref} className={className} onPointerDown={onPointerDown} width={W} height={H}/>;}
-type PublicBook={id:string;title:string;subtitle:string;author:string;count:number;cover:string;createdAt:string;pages?:string[];credits?:string[]};
-function App(){
- const [books,setBooks]=useState<Book[]>([]),[examples,setExamples]=useState<Example[]>([]),[book,setBook]=useState<Book|null>(null),[pageId,setPageId]=useState(''),[elementId,setElementId]=useState(''),[assetId,setAssetId]=useState('');
- const [tab,setTab]=useState<'pages'|'assets'>('pages'),[busy,setBusy]=useState(''),[notice,setNotice]=useState(''),[saved,setSaved]=useState('已保存在本机'),[past,setPast]=useState<Book[]>([]),[future,setFuture]=useState<Book[]>([]),[menu,setMenu]=useState(false),[drawer,setDrawer]=useState(false),[reading,setReading]=useState(false),[confirm,setConfirm]=useState<null|{message:string;action:()=>void}>(null),[view,setView]=useState<'library'|'community'>('library'),[publicBooks,setPublicBooks]=useState<PublicBook[]>([]),[publicBook,setPublicBook]=useState<PublicBook|null>(null),[publishOpen,setPublishOpen]=useState(false),[publishTitle,setPublishTitle]=useState(''),[consent,setConsent]=useState(false);
- const [motifsOpen,setMotifsOpen]=useState(false);
- const [provider,setProvider]=useState(false),[aiOpen,setAiOpen]=useState(false),[aiDraft,setAiDraft]=useState<any>(null);
- const fileInput=useRef<HTMLInputElement>(null),projectInput=useRef<HTMLInputElement>(null),bookRef=useRef<Book|null>(null),saveChain=useRef(Promise.resolve()),diskRevision=useRef(new Map<string,number>()),boot=useRef(false),dragRef=useRef<{startX:number;startY:number;old:Book;id:string;scale:number;resize:boolean}|null>(null),[dragging,setDragging]=useState(false);
- bookRef.current=book;
- const page=book?.pages.find(p=>p.id===pageId)??book?.pages[0],element=page?.elements.find(e=>e.id===elementId),asset=book?.assets.find(a=>a.id===assetId);
- const flash=(s:string)=>{setNotice(s);setTimeout(()=>setNotice(''),6500);};
- const run=async(label:string,fn:()=>Promise<void>)=>{setBusy(label);try{await fn();}catch(e){flash(e instanceof Error?e.message:String(e));}finally{setBusy('');}};
- const open=async(b:Book)=>{setNotice('');const current=bookRef.current;if(current&&current.id!==b.id){await saveChain.current;try{await saveBook(current,diskRevision.current.get(current.id));diskRevision.current.set(current.id,current.revision);}catch(e){flash((e as Error).message);return;}}diskRevision.current.set(b.id,b.revision??0);setBook(b);setPageId(b.pages[0]?.id??'');setElementId('');setAssetId('');setPast([]);setFuture([]);setReading(false);localStorage.setItem('ipbible:last',b.id);};
- useEffect(()=>{if(boot.current)return;boot.current=true;listBooks().then(bs=>{setBooks(bs);bs.forEach(b=>diskRevision.current.set(b.id,b.revision??0));const last=bs.find(b=>b.id===localStorage.getItem('ipbible:last'));if(last)open(last);}).catch(()=>flash('本机存储不可用，请使用项目导出保存。'));fetch('examples/catalog.json').then(r=>r.json()).then(setExamples).catch(()=>flash('样例素材暂时无法加载。'));fetch('api/status').then(r=>r.json()).then(r=>setProvider(!!r.ai)).catch(()=>{});const hash=location.hash.match(/^#book\/([a-f0-9-]+)$/);if(hash)loadPublic(hash[1]);},[]);
- useEffect(()=>{if(!book||dragging)return;setSaved('保存中…');const timer=setTimeout(()=>{const snapshot=book;saveChain.current=saveChain.current.then(async()=>{await saveBook(snapshot,diskRevision.current.get(snapshot.id));diskRevision.current.set(snapshot.id,snapshot.revision);if(bookRef.current?.id===snapshot.id && bookRef.current.revision===snapshot.revision)setSaved('已保存在本机');}).catch(e=>{setSaved('保存失败 · 请导出备份');flash(e.message);});},450);return()=>clearTimeout(timer);},[book,dragging]);
- useEffect(()=>{const before=(e:BeforeUnloadEvent)=>{if(saved!=='已保存在本机'){e.preventDefault();e.returnValue='';}};window.addEventListener('beforeunload',before);return()=>window.removeEventListener('beforeunload',before);},[saved]);
- function commit(next:Book){const old=bookRef.current;if(old){setPast(p=>[...p.slice(-29),old]);setFuture([]);}setBook({...next,revision:(old?.revision??0)+1,updatedAt:Date.now()});}
- const change=(fn:(b:Book)=>void)=>{if(!bookRef.current)return;const b=structuredClone(bookRef.current);fn(b);commit(b);};
- const changePage=(fn:(p:Page)=>void)=>change(b=>{const p=b.pages.find(p=>p.id===page?.id);if(p&&!p.locked)fn(p);});
- const changeElement=(patch:Partial<Element>)=>changePage(p=>{const i=p.elements.findIndex(e=>e.id===elementId);if(i>=0&&(!p.elements[i].locked||Object.keys(patch).every(k=>k==='locked')))p.elements[i]={...p.elements[i],...patch};});
- const undo=()=>{if(!past.length||!book)return;const previous=past[past.length-1];setFuture(f=>[book,...f]);setPast(p=>p.slice(0,-1));setBook({...previous,revision:book.revision+1,updatedAt:Date.now()});setElementId('');};
- const redo=()=>{if(!future.length||!book)return;setPast(p=>[...p,book]);setBook({...future[0],revision:book.revision+1,updatedAt:Date.now()});setFuture(f=>f.slice(1));setElementId('');};
- useEffect(()=>{const key=(e:KeyboardEvent)=>{if(/INPUT|TEXTAREA|SELECT/.test((e.target as HTMLElement).tagName))return;if((e.ctrlKey||e.metaKey)&&e.key==='z'){e.preventDefault();e.shiftKey?redo():undo();}if((e.key==='Delete'||e.key==='Backspace')&&element&&!element.locked){e.preventDefault();changePage(p=>{p.elements=p.elements.filter(e=>e.id!==elementId);});setElementId('');}if((e.ctrlKey||e.metaKey)&&e.key==='s'&&book){e.preventDefault();download(projectBlob(book),book.title+'.ipbible');}};window.addEventListener('keydown',key);return()=>window.removeEventListener('keydown',key);});
- const closeBook=()=>run('保存项目',async()=>{if(book){await saveChain.current;await saveBook(book,diskRevision.current.get(book.id));diskRevision.current.set(book.id,book.revision);}setBook(null);localStorage.removeItem('ipbible:last');setBooks(await listBooks());});
- const newBook=()=>{const b=blankBook();b.pages=[createPage(b,'cover')];open(b);};
- async function importFiles(files:File[]){await run('正在读取素材与 PSD 图层…',async()=>{const imported:Asset[]=[],notes:string[]=[],texts:string[]=[];for(const f of files){try{const result=await importFile(f);imported.push(...result.assets);notes.push(...result.notes);if(result.text)texts.push(result.text);}catch(e){notes.push(`${f.name}：${(e as Error).message}`);}}if(!imported.length&&!texts.length)throw Error(notes.join('\n')||'没有可导入的素材');const b=structuredClone(bookRef.current??blankBook());b.assets.push(...imported);if(b.assets.length>500)throw Error('每个项目最多保存 500 个素材，请拆分为多本书。');if(texts.length)b.description=[b.description,...texts].filter(Boolean).join('\n\n');if(!bookRef.current?.assets.length){if(b.title==='未命名的世界')b.title=files[0].name.replace(/\.[^.]+$/,'');const generated=generateBook(b);commit(generated);setPageId(generated.pages[0].id);}else commit(b);setTab('assets');flash(`已导入 ${imported.length} 个素材${notes.length?'。'+notes.join('；'):''}`);});}
- const addAsset=(a:Asset)=>{if(!page)return;const e:Element={id:uid(),type:'image',assetId:a.id,x:120,y:260,w:550,h:600,fit:'contain',opacity:a.opacity??1};changePage(p=>p.elements.push(e));setElementId(e.id);setAssetId('');setDrawer(false);};
- function startDrag(e:React.PointerEvent,resize=false){if(!page||!book||reading)return;const rect=(e.currentTarget.closest('.page-stage') as HTMLElement).getBoundingClientRect();const px=(e.clientX-rect.left)*W/rect.width,py=(e.clientY-rect.top)*H/rect.height;const hit=resize?element:[...page.elements].reverse().find(item=>px>=item.x&&px<=item.x+item.w&&py>=item.y&&py<=item.y+item.h);setElementId(hit?.id??'');setAssetId('');if(!hit||hit.locked||page.locked)return;dragRef.current={startX:e.clientX,startY:e.clientY,old:book,id:hit.id,scale:rect.width/W,resize};setDragging(true);e.currentTarget.setPointerCapture(e.pointerId);e.preventDefault();}
- useEffect(()=>{if(!dragging)return;const move=(e:PointerEvent)=>{const d=dragRef.current;if(!d)return;const b=structuredClone(d.old),el=b.pages.find(p=>p.id===page?.id)?.elements.find(e=>e.id===d.id);if(!el)return;const dx=(e.clientX-d.startX)/d.scale,dy=(e.clientY-d.startY)/d.scale;if(d.resize){el.w=Math.max(20,Math.min(W*2,el.w+dx));el.h=Math.max(20,Math.min(H*2,el.h+dy));}else{el.x=Math.round(Math.max(-el.w+20,Math.min(W-20,el.x+dx)));el.y=Math.round(Math.max(-el.h+20,Math.min(H-20,el.y+dy)));}setBook(b);};const stop=()=>{const d=dragRef.current;if(d&&bookRef.current&&JSON.stringify(d.old.pages)!==JSON.stringify(bookRef.current.pages)){setPast(p=>[...p.slice(-29),d.old]);setFuture([]);setBook(b=>b?{...b,revision:d.old.revision+1,updatedAt:Date.now()}:b);}dragRef.current=null;setDragging(false);};window.addEventListener('pointermove',move);window.addEventListener('pointerup',stop);window.addEventListener('pointercancel',stop);return()=>{window.removeEventListener('pointermove',move);window.removeEventListener('pointerup',stop);window.removeEventListener('pointercancel',stop);};},[dragging,page?.id]);
- async function loadPublic(id:string){await run('打开设定集',async()=>{const r=await fetch(`api/books/${id}`);if(!r.ok)throw Error('这本设定集不存在或已撤回。');setPublicBook(await r.json());});}
- async function loadCommunity(){setView('community');await run('加载社区',async()=>{const r=await fetch('api/books');if(!r.ok)throw Error('社区服务暂时不可用。你仍可导出离线阅读版。');setPublicBooks(await r.json());});}
- async function publish(){if(!book||!consent)return;await run('正在生成社区阅读版…',async()=>{const pages=await pageImages(book,.85),r=await fetch('api/books',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({title:publishTitle||book.title,subtitle:book.subtitle,author:book.author||'独立创作者',pages,credits:[...new Set(book.assets.map(a=>[a.credit,a.license,a.sourceUrl].filter(Boolean).join(' · ')).filter(Boolean))]})});const result=await r.json();if(!r.ok)throw Error(result.error||'分享失败');localStorage.setItem('ipbible:share:'+result.id,result.token);setPublishOpen(false);setConsent(false);const link=new URL(location.href);link.hash=`book/${result.id}`;flash('阅读版已发布，可在阅读页复制链接。');setPublicBook({...result,...{title:publishTitle||book.title,pages,subtitle:book.subtitle,author:book.author,credits:[]}});});}
- async function analyze(){if(!book)return;await run('正在理解素材…',async()=>{const selected=book.assets.filter(a=>!a.hidden).slice(0,12);const r=await fetch('api/analyze',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({title:book.title,description:book.description,assets:selected.map(a=>({id:a.id,name:a.name,description:a.description,url:a.url}))})});const data=await r.json();if(!r.ok)throw Error(data.error||'分析失败');setAiDraft(data);setAiOpen(true);});}
- const controls=<><button className="icon" title="撤销" aria-label="撤销" onClick={undo} disabled={!past.length}><Undo2 size={17}/></button><button className="icon" title="重做" aria-label="重做" onClick={redo} disabled={!future.length}><Redo2 size={17}/></button></>;
- return <>
-  <input hidden ref={fileInput} id="asset-file" type="file" accept=".psd,.png,.jpg,.jpeg,.webp,.txt,.md" multiple onChange={e=>{const f=Array.from(e.target.files||[]);e.target.value='';if(f.length)importFiles(f);}}/>
-  <input hidden ref={projectInput} id="project-file" type="file" accept=".ipbible,.json" onChange={e=>{const f=e.target.files?.[0];e.target.value='';if(f)run('打开项目',async()=>{const b=await readProject(f);b.id=uid();b.revision=0;open(b);});}}/>
-  {!book?<>
-   <header className="home-header"><a className="brand" href="#" onClick={e=>{e.preventDefault();setView('library');}}><BookOpen size={23}/><span>IP BIBLE</span><small>OPEN SOURCE</small></a><nav><button className={view==='library'?'active':''} onClick={()=>setView('library')}>我的书架</button><button className={view==='community'?'active':''} onClick={loadCommunity}>社区</button><a href="https://github.com/BeichenXu/IPBible" target="_blank" rel="noreferrer">GitHub ↗</a></nav></header>
-   <main className="library">
-    {view==='library'?<><section className="hero"><div><p className="eyebrow">CHARACTERS. WORLDS. STORIES.</p><h1>把你的世界，<br/><em>写成一本书。</em></h1><p className="hero-copy">从角色、地图与零散的灵感开始，<br/>编成属于你的 IP 设定集。</p><div className="hero-actions"><button className="primary" onClick={newBook}><Plus size={18}/>新建设定集</button><button onClick={()=>projectInput.current?.click()}><Upload size={16}/>打开项目</button></div><p className="quiet">素材在本机处理 · PSD 分层导入 · 自由编排</p></div><div className="hero-books" aria-hidden="true">{examples.slice(0,3).map((ex,i)=><div className={'hero-book b'+i} key={ex.id} style={{background:ex.accent}}><img src={ex.assets[0]?.url}/><div><small>THE ART OF</small><strong>{ex.title}</strong><span>CHARACTER & WORLD BIBLE</span></div></div>)}</div></section>
-    <section><div className="section-line"><h2>我的设定集 <span>{books.length.toString().padStart(2,'0')}</span></h2><button onClick={newBook}><Plus size={16}/>新建</button></div>{books.length?<div className="book-grid">{books.map(b=><article className="book-card" key={b.id}><button className="book-face" onClick={()=>open(b)}>{b.pages[0]&&<Preview book={b} page={b.pages[0]}/>}</button><div className="card-caption"><div><h3>{b.title}</h3><p>{b.pages.length} 页 · {new Date(b.updatedAt).toLocaleDateString('zh-CN')}</p></div><button className="icon" aria-label={`删除 ${b.title}`} onClick={()=>setConfirm({message:`删除本机的《${b.title}》？此操作不会撤回社区分享。`,action:()=>run('删除项目',async()=>{await deleteBook(b.id);setBooks(await listBooks());})})}><Trash2 size={15}/></button></div></article>)}</div>:<div className="empty-shelf"><BookOpen size={26}/><p>这里会收藏你正在创作的世界。</p><button onClick={newBook}>开始第一本 <span>↗</span></button></div>}</section>
-    <section><div className="section-line"><h2>从一本样书开始</h2><span className="muted">开放许可 IP · 可编辑副本</span></div><div className="example-grid">{examples.map(ex=><button className="example-card" key={ex.id} onClick={()=>run('正在打开样书…',async()=>open(await loadExample(ex)))}><div className="example-image"><img src={ex.assets[0]?.url} alt={ex.title}/><span>打开样书 ↗</span></div><div className="example-caption"><h3>{ex.title}</h3><p>{ex.subtitle}</p><small>{ex.license} · {ex.assets.length} 份素材</small></div></button>)}</div></section>
-    <footer className="home-footer"><span>IP BIBLE / 0.1</span><span>为还在生长的世界，留下一页。</span><a href="examples/ATTRIBUTION.md" target="_blank">素材来源与署名 ↗</a></footer></>:<><div className="section-line community-heading"><div><p className="eyebrow">SHARED WORLDS</p><h1>翻开别人的世界。</h1></div><button onClick={newBook}><Plus size={16}/>开始创作</button></div>{publicBooks.length?<div className="book-grid">{publicBooks.map(b=><article className="book-card" key={b.id}><button className="book-face" onClick={()=>{location.hash=`book/${b.id}`;loadPublic(b.id);}}><img src={b.cover} alt={b.title}/></button><h3>{b.title}</h3><p>{b.author} · {b.count} 页</p></article>)}</div>:<div className="empty-shelf"><BookOpen size={28}/><p>第一本公开设定集，等你来分享。</p></div>}</>}
-   </main>
-  </>:<>
-   <header className="editor-header"><div className="editor-title"><button className="icon" aria-label="返回书架" onClick={closeBook}><ArrowLeft size={20}/></button><BookOpen size={20}/><input aria-label="书名" value={book.title} onChange={e=>change(b=>{const previous=b.title;b.title=e.target.value;for(const p of b.pages)if(p.kind==='cover')for(const layer of p.elements)if(layer.type==='text'&&layer.text===previous&&!layer.locked)layer.text=b.title;})}/><span className="save-state">{saved}</span></div><div className="editor-actions">{controls}<button className="icon" title="阅读预览" aria-label="阅读预览" onClick={()=>{setReading(!reading);setElementId('');}}><Eye size={18}/></button><button className="export-button" onClick={()=>setMenu(!menu)}><Download size={16}/><span>导出</span></button><button className="primary" aria-label="分享到社区" onClick={()=>{setPublishTitle(book.title);setPublishOpen(true);}}>分享<span className="desktop-only">到社区</span></button></div>{menu&&<div className="dropdown"><button onClick={()=>{download(projectBlob(book),book.title+'.ipbible');setMenu(false);}}>可编辑项目 .ipbible</button><button onClick={()=>{setMenu(false);run('准备导出…',async()=>exportPDF(book,setBusy));}}>PDF 设定书</button><button onClick={()=>{setMenu(false);run('生成阅读版…',async()=>exportReader(book));}}>离线阅读版 HTML</button><button onClick={()=>{setMenu(false);projectInput.current?.click();}}>打开项目文件</button></div>}</header>
-   <div className={'workspace'+(reading?' reading':'')}>
-    {!reading&&<aside className={'navigator'+(drawer?' mobile-open':'')}><div className="nav-tabs"><button className={tab==='pages'?'selected':''} onClick={()=>setTab('pages')}>书页 <span>{book.pages.length}</span></button><button className={tab==='assets'?'selected':''} onClick={()=>setTab('assets')}>素材 <span>{book.assets.length}</span></button><button className="mobile-only icon" aria-label="关闭侧栏" onClick={()=>setDrawer(false)}><X size={16}/></button></div>{tab==='pages'?<><div className="page-list">{book.pages.map((p,i)=><div key={p.id} className={'page-nav'+(page?.id===p.id?' selected':'')}><button onClick={()=>{setPageId(p.id);setElementId('');setAssetId('');setDrawer(false);}}><Preview book={book} page={p}/><span><small>{String(i+1).padStart(2,'0')} / {kindNames[p.kind]}</small><strong>{p.name}</strong></span></button></div>)}</div><div className="navigator-bottom"><select aria-label="新增页面类型" defaultValue="" onChange={e=>{if(!e.target.value)return;const p=createPage(book,e.target.value as Kind);change(b=>b.pages.push(p));setPageId(p.id);e.target.value='';}}><option value="">＋ 添加书页</option>{Object.entries(kindNames).map(([k,n])=><option value={k} key={k}>{n}</option>)}</select></div></>:<><button className="upload-zone" onClick={()=>fileInput.current?.click()}><Upload size={22}/><strong>导入素材</strong><small>PSD · 图片 · 设定文字</small></button><div className="asset-list">{book.assets.map(a=><div key={a.id} className={'asset-card'+(assetId===a.id?' selected':'')+(a.hidden?' hidden-asset':'')}><button onClick={()=>{setAssetId(a.id);setElementId('');setDrawer(false);}}><img src={a.url} alt=""/><span>{a.name}<small>{a.layerPath?'PSD 图层':roleNames[a.role]}</small></span></button><button className="icon" title="添加到当前页" aria-label={`插入 ${a.name}`} onClick={()=>addAsset(a)}><Plus size={15}/></button></div>)}</div></>}</aside>}
-    <main className="canvas-area" onDragOver={e=>e.preventDefault()} onDrop={e=>{e.preventDefault();if(e.dataTransfer.files.length)importFiles(Array.from(e.dataTransfer.files));}}><div className="canvas-toolbar"><div><button className="icon mobile-only" aria-label="打开书页与素材" onClick={()=>setDrawer(true)}><Menu size={18}/></button><span>{page?kindNames[page.kind]:'空白项目'}</span><span className="muted">{book.pages.findIndex(p=>p.id===page?.id)+1} / {book.pages.length}</span></div>{!reading&&<div><button title="图形与配色" aria-label="图形与配色" className="icon" onClick={()=>setMotifsOpen(true)}><Layers size={18}/></button><button title="添加文字" aria-label="添加文字" className="icon" onClick={()=>{const e=text('新的文字',100,200,450,150,28);changePage(p=>p.elements.push(e));setElementId(e.id);}}><Type size={18}/></button><button title="导入素材" aria-label="导入素材" className="icon" onClick={()=>fileInput.current?.click()}><ImageIcon size={18}/></button><button disabled={page?.locked} onClick={()=>{if(page){change(b=>{b.seed++;const i=b.pages.findIndex(p=>p.id===page.id);b.pages[i]=regeneratePage(b,page);});setElementId('');}}}><RefreshCw size={15}/><span>换个编排</span></button></div>}</div>
-     {page&&<div className="page-shell"><div className="page-stage"><Preview book={book} page={page} onPointerDown={e=>startDrag(e)}/>{element&&!reading&&<div className={'selection'+(element.locked?' locked':'')} style={{left:`${element.x/W*100}%`,top:`${element.y/H*100}%`,width:`${element.w/W*100}%`,height:`${element.h/H*100}%`}}>{!element.locked&&<button className="resize-handle" aria-label="缩放选中元素" onPointerDown={e=>{e.stopPropagation();startDrag(e,true);}}/>}</div>}</div></div>}
-     <div className="page-pagination"><button className="icon" aria-label="上一页" disabled={book.pages.indexOf(page!)<=0} onClick={()=>{setPageId(book.pages[book.pages.indexOf(page!)-1].id);setElementId('');}}><ChevronLeft size={18}/></button><span>{page?.name}</span><button className="icon" aria-label="下一页" disabled={book.pages.indexOf(page!)>=book.pages.length-1} onClick={()=>{setPageId(book.pages[book.pages.indexOf(page!)+1].id);setElementId('');}}><ChevronRight size={18}/></button></div>
-    </main>
-    {!reading&&<aside className="inspector"><div className="inspector-heading"><span>{asset?'素材设定':element?'图层编辑':'书页设置'}</span>{(asset||element)&&<button className="icon" aria-label="取消选择" onClick={()=>{setAssetId('');setElementId('');}}><X size={16}/></button>}</div>
-     {asset?<div className="fields"><img className="asset-preview" src={asset.url}/><label>素材名称<input value={asset.name} onChange={e=>change(b=>{b.assets.find(a=>a.id===asset.id)!.name=e.target.value;})}/></label><label>内容类型<select value={asset.role} onChange={e=>change(b=>{b.assets.find(a=>a.id===asset.id)!.role=e.target.value as Role;})}>{Object.entries(roleNames).map(([k,n])=><option key={k} value={k}>{n}</option>)}</select></label><label>设定介绍<textarea rows={8} value={asset.description} onChange={e=>change(b=>{b.assets.find(a=>a.id===asset.id)!.description=e.target.value;})}/></label><label className="check-row"><input type="checkbox" checked={!asset.hidden} onChange={e=>change(b=>{b.assets.find(a=>a.id===asset.id)!.hidden=!e.target.checked;})}/>参与整书生成</label><button className="primary" onClick={()=>addAsset(asset)}><Plus size={15}/>放入当前页</button>{asset.warning&&<p className="warning">{asset.warning}</p>}{asset.layerPath&&<p className="source-note">{asset.sourceFile}<br/>{asset.layerPath}</p>}{asset.credit&&<p className="source-note">{asset.credit}<br/>{asset.license}<br/><a href={asset.sourceUrl} target="_blank" rel="noreferrer">查看素材来源 ↗</a></p>}</div>:element?<div className="fields"><div className="layer-actions"><button onClick={()=>changeElement({locked:!element.locked})}>{element.locked?<Lock size={15}/>:<Unlock size={15}/>} {element.locked?'已锁定':'锁定'}</button><button aria-label="复制图层" onClick={()=>{const copy={...element,id:uid(),x:element.x+16,y:element.y+16};changePage(p=>p.elements.push(copy));setElementId(copy.id);}}><Copy size={15}/></button><button aria-label="删除图层" disabled={element.locked} onClick={()=>{changePage(p=>{p.elements=p.elements.filter(e=>e.id!==element.id);});setElementId('');}}><Trash2 size={15}/></button></div>{element.type==='text'&&<><label>文字<textarea aria-label="图层文字" rows={7} value={element.text} disabled={element.locked} onChange={e=>changeElement({text:e.target.value})}/></label><div className="field-row"><label>字号<input type="number" min="6" max="200" value={element.fontSize} onChange={e=>changeElement({fontSize:Math.max(6,Math.min(200,+e.target.value))})}/></label><label>文字颜色<input type="color" value={element.color} onChange={e=>changeElement({color:e.target.value})}/></label></div><label>字体<select value={element.fontFamily} onChange={e=>changeElement({fontFamily:e.target.value as 'serif'|'sans'})}><option value="serif">书籍衬线</option><option value="sans">清晰黑体</option></select></label>{overflowing(element)&&<p className="warning">文字超出了文本框，可扩大高度或减小字号。</p>}</>}{element.type==='image'&&<><label>图片适配<select value={element.fit} onChange={e=>changeElement({fit:e.target.value as 'cover'|'contain'})}><option value="contain">完整展示</option><option value="cover">铺满裁切</option></select></label><label>替换素材<select value={element.assetId} onChange={e=>changeElement({assetId:e.target.value})}>{book.assets.map(a=><option key={a.id} value={a.id}>{a.name}</option>)}</select></label></>}{element.type==='shape'&&<label>颜色<input type="color" value={element.fill} onChange={e=>changeElement({fill:e.target.value})}/></label>}
-       <div className="field-row">{(['x','y'] as const).map(k=><label key={k}>{k.toUpperCase()}<input type="number" aria-label={k.toUpperCase()} disabled={element.locked} value={Math.round(element[k])} onChange={e=>changeElement({[k]:Math.max(-2000,Math.min(3000,+e.target.value))})}/></label>)}</div><div className="field-row">{(['w','h'] as const).map(k=><label key={k}>{k==='w'?'宽度':'高度'}<input type="number" min="1" disabled={element.locked} value={Math.round(element[k])} onChange={e=>changeElement({[k]:Math.max(1,Math.min(3000,+e.target.value))})}/></label>)}</div><label>不透明度<input type="range" min="0" max="1" step=".05" value={element.opacity??1} onChange={e=>changeElement({opacity:+e.target.value})}/></label><div className="field-row"><button aria-label="图层上移" disabled={element.locked} onClick={()=>changePage(p=>{const i=p.elements.findIndex(e=>e.id===element.id);if(i<p.elements.length-1)[p.elements[i],p.elements[i+1]]=[p.elements[i+1],p.elements[i]];})}><ChevronUp size={15}/>上移</button><button aria-label="图层下移" disabled={element.locked} onClick={()=>changePage(p=>{const i=p.elements.findIndex(e=>e.id===element.id);if(i>0)[p.elements[i],p.elements[i-1]]=[p.elements[i-1],p.elements[i]];})}><ChevronDown size={15}/>下移</button></div>
-      </div>:<div className="fields"><label>页面名称<input value={page?.name||''} onChange={e=>changePage(p=>{p.name=e.target.value;})}/></label><div className="field-row"><label>纸张颜色<input type="color" value={page?.background||'#f5f1e8'} onChange={e=>changePage(p=>{p.background=e.target.value;})}/></label><label>主题色<input type="color" value={book.accent} onChange={e=>change(b=>{b.accent=e.target.value;})}/></label></div><div className="page-ops"><button aria-label="书页前移" onClick={()=>change(b=>{const i=b.pages.findIndex(p=>p.id===page?.id);if(i>0)[b.pages[i],b.pages[i-1]]=[b.pages[i-1],b.pages[i]];})}><ChevronUp size={15}/>前移</button><button aria-label="书页后移" onClick={()=>change(b=>{const i=b.pages.findIndex(p=>p.id===page?.id);if(i<b.pages.length-1)[b.pages[i],b.pages[i+1]]=[b.pages[i+1],b.pages[i]];})}><ChevronDown size={15}/>后移</button><button aria-label="复制书页" onClick={()=>{if(page){const p=structuredClone(page);p.id=uid();p.name+=' · 副本';change(b=>b.pages.splice(b.pages.findIndex(q=>q.id===page.id)+1,0,p));setPageId(p.id);}}}><Copy size={15}/></button><button aria-label="删除书页" disabled={book.pages.length<2} onClick={()=>setConfirm({message:'删除当前书页？可通过撤销恢复。',action:()=>{change(b=>{b.pages=b.pages.filter(p=>p.id!==page?.id);});setPageId('');}})}><Trash2 size={15}/></button></div><details open><summary>整本设定</summary><label>副标题<input value={book.subtitle} onChange={e=>change(b=>{b.subtitle=e.target.value;})}/></label><label>作者 / 署名<input value={book.author} onChange={e=>change(b=>{b.author=e.target.value;})}/></label><label>世界观与简介<textarea rows={5} value={book.description} onChange={e=>change(b=>{b.description=e.target.value;})}/></label><button className="wide" onClick={()=>setConfirm({message:'根据当前素材与介绍重新生成整本书？当前编排可通过撤销恢复。',action:()=>{const next=generateBook({...book,seed:book.seed+1});commit(next);setPageId(next.pages[0].id);}})}><RefreshCw size={15}/>生成整本设定集</button>{provider&&<button className="wide" onClick={()=>setConfirm({message:'将最多 12 张素材和设定文字发送给此服务配置的 AI 模型，生成可供审阅的内容建议？',action:analyze})}>理解素材并建议内容</button>}</details></div>}
-      {page&&<details className="layers-panel" open><summary><Layers size={14}/> 页面图层 <span>{page.elements.length}</span></summary>{[...page.elements].reverse().map(e=><button className={elementId===e.id?'selected':''} key={e.id} onClick={()=>{setElementId(e.id);setAssetId('');}}>{e.type==='text'?<Type size={13}/>:e.type==='image'?<ImageIcon size={13}/>:<Layers size={13}/>}<span>{e.text?.slice(0,30)||book.assets.find(a=>a.id===e.assetId)?.name||(e.type==='motif'?'图形部件':'色块')}</span>{e.locked&&<Lock size={11}/>}</button>)}</details>}
-    </aside>}
-   </div>
-  </>}
-  {motifsOpen&&book&&page&&<MotifPicker background={page.background} accent={book.accent} onClose={()=>setMotifsOpen(false)} onPick={key=>{const e:Element={id:uid(),type:'motif',motif:key,x:80,y:300,w:630,h:420,opacity:.65,fill:book.accent,color:'#35432e'};changePage(p=>p.elements.push(e));setElementId(e.id);setMotifsOpen(false);}} onPalette={palette=>{change(b=>{b.accent=palette.accent;const p=b.pages.find(p=>p.id===page.id)!;p.background=palette.bg;for(const e of p.elements)if(!e.locked){if(e.type==='text')e.color=palette.fg;if(e.type==='motif'){e.color=palette.fg;e.fill=palette.accent;}}});setMotifsOpen(false);}}/>}
-  {notice&&<div className="toast" role="status"><span>{notice}</span><button className="icon" aria-label="关闭通知" onClick={()=>setNotice('')}><X size={15}/></button></div>}
-  {busy&&<div className="busy"><div className="spinner"/><span>{busy}</span></div>}
-  {confirm&&<div className="modal-backdrop"><div className="modal small"><p>{confirm.message}</p><div className="modal-actions"><button onClick={()=>setConfirm(null)}>取消</button><button className="primary" onClick={()=>{const fn=confirm.action;setConfirm(null);fn();}}>继续</button></div></div></div>}
-  {publishOpen&&<div className="modal-backdrop"><div className="modal small"><div className="section-line"><h2>分享这本设定集</h2><button className="icon" onClick={()=>setPublishOpen(false)} aria-label="关闭分享"><X size={18}/></button></div><p>分享后，社区读者可以翻阅书页。原始 PSD 和可编辑项目保留在本机。</p><label>书名<input value={publishTitle} onChange={e=>setPublishTitle(e.target.value)}/></label><label className="check-row consent"><input type="checkbox" checked={consent} onChange={e=>setConsent(e.target.checked)}/>我有权公开这些内容，并同意发布阅读版。</label><button className="primary wide" disabled={!consent} onClick={publish}>发布阅读版</button></div></div>}
-  {publicBook&&<div className="reader-overlay"><header><div><strong>{publicBook.title}</strong><small>{publicBook.author}</small></div><div><button onClick={()=>{const u=new URL(location.href);u.hash=`book/${publicBook.id}`;if(navigator.clipboard)navigator.clipboard.writeText(u.href).then(()=>flash('阅读链接已复制'));else flash(u.href);}}><Copy size={16}/>复制链接</button>{localStorage.getItem('ipbible:share:'+publicBook.id)&&<button onClick={()=>setConfirm({message:'撤回这本书的社区阅读版？本机项目会保留。',action:()=>run('撤回分享',async()=>{const r=await fetch(`api/books/${publicBook.id}`,{method:'DELETE',headers:{'X-Owner-Token':localStorage.getItem('ipbible:share:'+publicBook.id)!}});if(!r.ok)throw Error('撤回失败');setPublicBook(null);setNotice('');location.hash='';localStorage.removeItem('ipbible:share:'+publicBook.id);if(view==='community')loadCommunity();})})}><Trash2 size={16}/>撤回</button>}<button className="icon" aria-label="关闭阅读" onClick={()=>{setPublicBook(null);location.hash='';}}><X size={20}/></button></div></header><main>{publicBook.pages?.map((src,i)=><img key={i} src={src} alt={`第 ${i+1} 页`}/>)}</main><footer>{publicBook.credits?.map((c,i)=><p key={i}>{c}</p>)}</footer></div>}
-  {aiOpen&&aiDraft&&<div className="modal-backdrop"><div className="modal"><div className="section-line"><h2>审阅内容建议</h2><button className="icon" onClick={()=>setAiOpen(false)}><X size={18}/></button></div><p>确认后写入素材介绍，再生成书页。请核对模型对角色与世界观的理解。</p>{aiDraft.assets?.map((a:any)=><label key={a.id}>{book?.assets.find(x=>x.id===a.id)?.name}<textarea value={a.description} onChange={e=>setAiDraft({...aiDraft,assets:aiDraft.assets.map((x:any)=>x.id===a.id?{...x,description:e.target.value}:x)})}/></label>)}<button className="primary" onClick={()=>{change(b=>{for(const a of aiDraft.assets||[]){const original=b.assets.find(x=>x.id===a.id);if(original&&typeof a.description==='string')original.description=a.description;}});setAiOpen(false);flash('建议已写入素材介绍，可生成整书应用。');}}>采用这些介绍</button></div></div>}
- </>;
+function Preview({
+  book,
+  page,
+  className = "",
+  onPointerDown,
+}: {
+  book: Book;
+  page: Page;
+  className?: string;
+  onPointerDown?: (e: React.PointerEvent<HTMLCanvasElement>) => void;
+}) {
+  const ref = useRef<HTMLCanvasElement>(null);
+  useEffect(() => {
+    let active = true;
+    const staging = document.createElement("canvas");
+    renderPage(staging, book, page, 1)
+      .then(() => {
+        if (active && ref.current) {
+          ref.current.width = W;
+          ref.current.height = H;
+          ref.current.getContext("2d")!.drawImage(staging, 0, 0);
+        }
+      })
+      .catch(() => {});
+    return () => {
+      active = false;
+    };
+  }, [book, page]);
+  return (
+    <canvas
+      ref={ref}
+      className={className}
+      onPointerDown={onPointerDown}
+      width={W}
+      height={H}
+    />
+  );
 }
-createRoot(document.getElementById('root')!).render(<App/>);
+type PublicBook = {
+  id: string;
+  title: string;
+  subtitle: string;
+  author: string;
+  count: number;
+  cover: string;
+  createdAt: string;
+  pages?: string[];
+  credits?: string[];
+};
+function App() {
+  const [books, setBooks] = useState<Book[]>([]),
+    [examples, setExamples] = useState<Example[]>([]),
+    [book, setBook] = useState<Book | null>(null),
+    [pageId, setPageId] = useState(""),
+    [elementId, setElementId] = useState(""),
+    [assetId, setAssetId] = useState("");
+  const [tab, setTab] = useState<"pages" | "assets">("pages"),
+    [busy, setBusy] = useState(""),
+    [notice, setNotice] = useState(""),
+    [saved, setSaved] = useState("已保存在本机"),
+    [past, setPast] = useState<Book[]>([]),
+    [future, setFuture] = useState<Book[]>([]),
+    [menu, setMenu] = useState(false),
+    [drawer, setDrawer] = useState(false),
+    [reading, setReading] = useState(false),
+    [confirm, setConfirm] = useState<null | {
+      message: string;
+      action: () => void;
+    }>(null),
+    [view, setView] = useState<"library" | "community">("library"),
+    [publicBooks, setPublicBooks] = useState<PublicBook[]>([]),
+    [publicBook, setPublicBook] = useState<PublicBook | null>(null),
+    [publishOpen, setPublishOpen] = useState(false),
+    [publishTitle, setPublishTitle] = useState(""),
+    [consent, setConsent] = useState(false);
+  const [motifsOpen, setMotifsOpen] = useState(false);
+  const [provider, setProvider] = useState(false),
+    [aiOpen, setAiOpen] = useState(false),
+    [aiDraft, setAiDraft] = useState<any>(null);
+  const fileInput = useRef<HTMLInputElement>(null),
+    projectInput = useRef<HTMLInputElement>(null),
+    bookRef = useRef<Book | null>(null),
+    saveChain = useRef(Promise.resolve()),
+    diskRevision = useRef(new Map<string, number>()),
+    boot = useRef(false),
+    dragRef = useRef<{
+      startX: number;
+      startY: number;
+      old: Book;
+      id: string;
+      scale: number;
+      resize: boolean;
+    } | null>(null),
+    [dragging, setDragging] = useState(false);
+  bookRef.current = book;
+  const page = book?.pages.find((p) => p.id === pageId) ?? book?.pages[0],
+    element = page?.elements.find((e) => e.id === elementId),
+    asset = book?.assets.find((a) => a.id === assetId);
+  const flash = (s: string) => {
+    setNotice(s);
+    setTimeout(() => setNotice(""), 6500);
+  };
+  const run = async (label: string, fn: () => Promise<void>) => {
+    setBusy(label);
+    try {
+      await fn();
+    } catch (e) {
+      flash(e instanceof Error ? e.message : String(e));
+    } finally {
+      setBusy("");
+    }
+  };
+  const open = async (b: Book) => {
+    setNotice("");
+    const current = bookRef.current;
+    if (current && current.id !== b.id) {
+      await saveChain.current;
+      try {
+        await saveBook(current, diskRevision.current.get(current.id));
+        diskRevision.current.set(current.id, current.revision);
+      } catch (e) {
+        flash((e as Error).message);
+        return;
+      }
+    }
+    diskRevision.current.set(b.id, b.revision ?? 0);
+    setBook(b);
+    setPageId(b.pages[0]?.id ?? "");
+    setElementId("");
+    setAssetId("");
+    setPast([]);
+    setFuture([]);
+    setReading(false);
+    localStorage.setItem("ipbible:last", b.id);
+  };
+  useEffect(() => {
+    if (boot.current) return;
+    boot.current = true;
+    listBooks()
+      .then((bs) => {
+        setBooks(bs);
+        bs.forEach((b) => diskRevision.current.set(b.id, b.revision ?? 0));
+        const last = bs.find(
+          (b) => b.id === localStorage.getItem("ipbible:last"),
+        );
+        if (last) open(last);
+      })
+      .catch(() => flash("本机存储不可用，请使用项目导出保存。"));
+    fetch("examples/catalog.json")
+      .then((r) => r.json())
+      .then(setExamples)
+      .catch(() => flash("样例素材暂时无法加载。"));
+    fetch("api/status")
+      .then((r) => r.json())
+      .then((r) => setProvider(!!r.ai))
+      .catch(() => {});
+    const hash = location.hash.match(/^#book\/([a-f0-9-]+)$/);
+    if (hash) loadPublic(hash[1]);
+  }, []);
+  useEffect(() => {
+    if (!book || dragging) return;
+    setSaved("保存中…");
+    const timer = setTimeout(() => {
+      const snapshot = book;
+      saveChain.current = saveChain.current
+        .then(async () => {
+          await saveBook(snapshot, diskRevision.current.get(snapshot.id));
+          diskRevision.current.set(snapshot.id, snapshot.revision);
+          if (
+            bookRef.current?.id === snapshot.id &&
+            bookRef.current.revision === snapshot.revision
+          )
+            setSaved("已保存在本机");
+        })
+        .catch((e) => {
+          setSaved("保存失败 · 请导出备份");
+          flash(e.message);
+        });
+    }, 450);
+    return () => clearTimeout(timer);
+  }, [book, dragging]);
+  useEffect(() => {
+    const before = (e: BeforeUnloadEvent) => {
+      if (saved !== "已保存在本机") {
+        e.preventDefault();
+        e.returnValue = "";
+      }
+    };
+    window.addEventListener("beforeunload", before);
+    return () => window.removeEventListener("beforeunload", before);
+  }, [saved]);
+  function commit(next: Book) {
+    const old = bookRef.current;
+    if (old) {
+      setPast((p) => [...p.slice(-29), old]);
+      setFuture([]);
+    }
+    setBook({
+      ...next,
+      revision: (old?.revision ?? 0) + 1,
+      updatedAt: Date.now(),
+    });
+  }
+  const change = (fn: (b: Book) => void) => {
+    if (!bookRef.current) return;
+    const b = structuredClone(bookRef.current);
+    fn(b);
+    commit(b);
+  };
+  const changePage = (fn: (p: Page) => void) =>
+    change((b) => {
+      const p = b.pages.find((p) => p.id === page?.id);
+      if (p && !p.locked) fn(p);
+    });
+  const changeElement = (patch: Partial<Element>) =>
+    changePage((p) => {
+      const i = p.elements.findIndex((e) => e.id === elementId);
+      if (
+        i >= 0 &&
+        (!p.elements[i].locked ||
+          Object.keys(patch).every((k) => k === "locked"))
+      )
+        p.elements[i] = { ...p.elements[i], ...patch };
+    });
+  const undo = () => {
+    if (!past.length || !book) return;
+    const previous = past[past.length - 1];
+    setFuture((f) => [book, ...f]);
+    setPast((p) => p.slice(0, -1));
+    setBook({
+      ...previous,
+      revision: book.revision + 1,
+      updatedAt: Date.now(),
+    });
+    setElementId("");
+  };
+  const redo = () => {
+    if (!future.length || !book) return;
+    setPast((p) => [...p, book]);
+    setBook({
+      ...future[0],
+      revision: book.revision + 1,
+      updatedAt: Date.now(),
+    });
+    setFuture((f) => f.slice(1));
+    setElementId("");
+  };
+  useEffect(() => {
+    const key = (e: KeyboardEvent) => {
+      if (/INPUT|TEXTAREA|SELECT/.test((e.target as HTMLElement).tagName))
+        return;
+      if ((e.ctrlKey || e.metaKey) && e.key === "z") {
+        e.preventDefault();
+        e.shiftKey ? redo() : undo();
+      }
+      if (
+        (e.key === "Delete" || e.key === "Backspace") &&
+        element &&
+        !element.locked
+      ) {
+        e.preventDefault();
+        changePage((p) => {
+          p.elements = p.elements.filter((e) => e.id !== elementId);
+        });
+        setElementId("");
+      }
+      if ((e.ctrlKey || e.metaKey) && e.key === "s" && book) {
+        e.preventDefault();
+        download(projectBlob(book), book.title + ".ipbible");
+      }
+    };
+    window.addEventListener("keydown", key);
+    return () => window.removeEventListener("keydown", key);
+  });
+  const closeBook = () =>
+    run("保存项目", async () => {
+      if (book) {
+        await saveChain.current;
+        await saveBook(book, diskRevision.current.get(book.id));
+        diskRevision.current.set(book.id, book.revision);
+      }
+      setBook(null);
+      localStorage.removeItem("ipbible:last");
+      setBooks(await listBooks());
+    });
+  const newBook = () => {
+    const b = blankBook();
+    b.pages = [createPage(b, "cover")];
+    open(b);
+  };
+  async function importFiles(files: File[]) {
+    await run("正在读取素材与 PSD 图层…", async () => {
+      const imported: Asset[] = [],
+        notes: string[] = [],
+        texts: string[] = [];
+      for (const f of files) {
+        try {
+          const result = await importFile(f);
+          imported.push(...result.assets);
+          notes.push(...result.notes);
+          if (result.text) texts.push(result.text);
+        } catch (e) {
+          notes.push(`${f.name}：${(e as Error).message}`);
+        }
+      }
+      if (!imported.length && !texts.length)
+        throw Error(notes.join("\n") || "没有可导入的素材");
+      const b = structuredClone(bookRef.current ?? blankBook());
+      b.assets.push(...imported);
+      if (b.assets.length > 500)
+        throw Error("每个项目最多保存 500 个素材，请拆分为多本书。");
+      if (texts.length)
+        b.description = [b.description, ...texts].filter(Boolean).join("\n\n");
+      if (!bookRef.current?.assets.length) {
+        if (b.title === "未命名的世界")
+          b.title = files[0].name.replace(/\.[^.]+$/, "");
+        const generated = generateBook(b);
+        commit(generated);
+        setPageId(generated.pages[0].id);
+      } else commit(b);
+      setTab("assets");
+      flash(
+        `已导入 ${imported.length} 个素材${notes.length ? "。" + notes.join("；") : ""}`,
+      );
+    });
+  }
+  const addAsset = (a: Asset) => {
+    if (!page) return;
+    const e: Element = {
+      id: uid(),
+      type: "image",
+      assetId: a.id,
+      x: 120,
+      y: 260,
+      w: 550,
+      h: 600,
+      fit: "contain",
+      opacity: a.opacity ?? 1,
+    };
+    changePage((p) => p.elements.push(e));
+    setElementId(e.id);
+    setAssetId("");
+    setDrawer(false);
+  };
+  function startDrag(e: React.PointerEvent, resize = false) {
+    if (!page || !book || reading) return;
+    const rect = (
+      e.currentTarget.closest(".page-stage") as HTMLElement
+    ).getBoundingClientRect();
+    const px = ((e.clientX - rect.left) * W) / rect.width,
+      py = ((e.clientY - rect.top) * H) / rect.height;
+    const hit = resize
+      ? element
+      : [...page.elements]
+          .reverse()
+          .find(
+            (item) =>
+              px >= item.x &&
+              px <= item.x + item.w &&
+              py >= item.y &&
+              py <= item.y + item.h,
+          );
+    setElementId(hit?.id ?? "");
+    setAssetId("");
+    if (!hit || hit.locked || page.locked) return;
+    dragRef.current = {
+      startX: e.clientX,
+      startY: e.clientY,
+      old: book,
+      id: hit.id,
+      scale: rect.width / W,
+      resize,
+    };
+    setDragging(true);
+    e.currentTarget.setPointerCapture(e.pointerId);
+    e.preventDefault();
+  }
+  useEffect(() => {
+    if (!dragging) return;
+    const move = (e: PointerEvent) => {
+      const d = dragRef.current;
+      if (!d) return;
+      const b = structuredClone(d.old),
+        el = b.pages
+          .find((p) => p.id === page?.id)
+          ?.elements.find((e) => e.id === d.id);
+      if (!el) return;
+      const dx = (e.clientX - d.startX) / d.scale,
+        dy = (e.clientY - d.startY) / d.scale;
+      if (d.resize) {
+        el.w = Math.max(20, Math.min(W * 2, el.w + dx));
+        el.h = Math.max(20, Math.min(H * 2, el.h + dy));
+      } else {
+        el.x = Math.round(Math.max(-el.w + 20, Math.min(W - 20, el.x + dx)));
+        el.y = Math.round(Math.max(-el.h + 20, Math.min(H - 20, el.y + dy)));
+      }
+      setBook(b);
+    };
+    const stop = () => {
+      const d = dragRef.current;
+      if (
+        d &&
+        bookRef.current &&
+        JSON.stringify(d.old.pages) !== JSON.stringify(bookRef.current.pages)
+      ) {
+        setPast((p) => [...p.slice(-29), d.old]);
+        setFuture([]);
+        setBook((b) =>
+          b ? { ...b, revision: d.old.revision + 1, updatedAt: Date.now() } : b,
+        );
+      }
+      dragRef.current = null;
+      setDragging(false);
+    };
+    window.addEventListener("pointermove", move);
+    window.addEventListener("pointerup", stop);
+    window.addEventListener("pointercancel", stop);
+    return () => {
+      window.removeEventListener("pointermove", move);
+      window.removeEventListener("pointerup", stop);
+      window.removeEventListener("pointercancel", stop);
+    };
+  }, [dragging, page?.id]);
+  async function loadPublic(id: string) {
+    await run("打开设定集", async () => {
+      const r = await fetch(`api/books/${id}`);
+      if (!r.ok) throw Error("这本设定集不存在或已撤回。");
+      setPublicBook(await r.json());
+    });
+  }
+  async function loadCommunity() {
+    setView("community");
+    await run("加载社区", async () => {
+      const r = await fetch("api/books");
+      if (!r.ok) throw Error("社区服务暂时不可用。你仍可导出离线阅读版。");
+      setPublicBooks(await r.json());
+    });
+  }
+  async function publish() {
+    if (!book || !consent) return;
+    await run("正在生成社区阅读版…", async () => {
+      const pages = await pageImages(book, 0.85),
+        r = await fetch("api/books", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            title: publishTitle || book.title,
+            subtitle: book.subtitle,
+            author: book.author || "独立创作者",
+            pages,
+            credits: [
+              ...new Set(
+                book.assets
+                  .map((a) =>
+                    [a.credit, a.license, a.sourceUrl]
+                      .filter(Boolean)
+                      .join(" · "),
+                  )
+                  .filter(Boolean),
+              ),
+            ],
+          }),
+        });
+      const result = await r.json();
+      if (!r.ok) throw Error(result.error || "分享失败");
+      localStorage.setItem("ipbible:share:" + result.id, result.token);
+      setPublishOpen(false);
+      setConsent(false);
+      const link = new URL(location.href);
+      link.hash = `book/${result.id}`;
+      flash("阅读版已发布，可在阅读页复制链接。");
+      setPublicBook({
+        ...result,
+        ...{
+          title: publishTitle || book.title,
+          pages,
+          subtitle: book.subtitle,
+          author: book.author,
+          credits: [],
+        },
+      });
+    });
+  }
+  async function analyze() {
+    if (!book) return;
+    await run("正在理解素材…", async () => {
+      const selected = book.assets.filter((a) => !a.hidden).slice(0, 12);
+      const r = await fetch("api/analyze", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          title: book.title,
+          description: book.description,
+          assets: selected.map((a) => ({
+            id: a.id,
+            name: a.name,
+            description: a.description,
+            url: a.url,
+          })),
+        }),
+      });
+      const data = await r.json();
+      if (!r.ok) throw Error(data.error || "分析失败");
+      setAiDraft(data);
+      setAiOpen(true);
+    });
+  }
+  const controls = (
+    <>
+      <button
+        className="icon"
+        title="撤销"
+        aria-label="撤销"
+        onClick={undo}
+        disabled={!past.length}
+      >
+        <Undo2 size={17} />
+      </button>
+      <button
+        className="icon"
+        title="重做"
+        aria-label="重做"
+        onClick={redo}
+        disabled={!future.length}
+      >
+        <Redo2 size={17} />
+      </button>
+    </>
+  );
+  return (
+    <>
+      <input
+        hidden
+        ref={fileInput}
+        id="asset-file"
+        type="file"
+        accept=".psd,.png,.jpg,.jpeg,.webp,.txt,.md"
+        multiple
+        onChange={(e) => {
+          const f = Array.from(e.target.files || []);
+          e.target.value = "";
+          if (f.length) importFiles(f);
+        }}
+      />
+      <input
+        hidden
+        ref={projectInput}
+        id="project-file"
+        type="file"
+        accept=".ipbible,.json"
+        onChange={(e) => {
+          const f = e.target.files?.[0];
+          e.target.value = "";
+          if (f)
+            run("打开项目", async () => {
+              const b = await readProject(f);
+              b.id = uid();
+              b.revision = 0;
+              open(b);
+            });
+        }}
+      />
+      {!book ? (
+        <>
+          <header className="home-header">
+            <a
+              className="brand"
+              href="#"
+              onClick={(e) => {
+                e.preventDefault();
+                setView("library");
+              }}
+            >
+              <BookOpen size={23} />
+              <span>IP BIBLE</span>
+              <small>OPEN SOURCE</small>
+            </a>
+            <nav>
+              <button
+                className={view === "library" ? "active" : ""}
+                onClick={() => setView("library")}
+              >
+                我的书架
+              </button>
+              <button
+                className={view === "community" ? "active" : ""}
+                onClick={loadCommunity}
+              >
+                社区
+              </button>
+              <a
+                href="https://github.com/BeichenXu/IPBible"
+                target="_blank"
+                rel="noreferrer"
+              >
+                GitHub ↗
+              </a>
+            </nav>
+          </header>
+          <main className="library">
+            {view === "library" ? (
+              <>
+                <section className="hero">
+                  <div>
+                    <p className="eyebrow">CHARACTERS. WORLDS. STORIES.</p>
+                    <h1>
+                      把你的世界，
+                      <br />
+                      <em>写成一本书。</em>
+                    </h1>
+                    <p className="hero-copy">
+                      从角色、地图与零散的灵感开始，
+                      <br />
+                      编成属于你的 IP 设定集。
+                    </p>
+                    <div className="hero-actions">
+                      <button className="primary" onClick={newBook}>
+                        <Plus size={18} />
+                        新建设定集
+                      </button>
+                      <button onClick={() => projectInput.current?.click()}>
+                        <Upload size={16} />
+                        打开项目
+                      </button>
+                    </div>
+                    <p className="quiet">
+                      素材在本机处理 · PSD 分层导入 · 自由编排
+                    </p>
+                  </div>
+                  <div className="hero-books" aria-hidden="true">
+                    {examples.slice(0, 3).map((ex, i) => (
+                      <div
+                        className={"hero-book b" + i}
+                        key={ex.id}
+                        style={{ background: ex.accent }}
+                      >
+                        <img src={ex.assets[0]?.url} />
+                        <div>
+                          <small>THE ART OF</small>
+                          <strong>{ex.title}</strong>
+                          <span>CHARACTER & WORLD BIBLE</span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </section>
+                <section>
+                  <div className="section-line">
+                    <h2>
+                      我的设定集{" "}
+                      <span>{books.length.toString().padStart(2, "0")}</span>
+                    </h2>
+                    <button onClick={newBook}>
+                      <Plus size={16} />
+                      新建
+                    </button>
+                  </div>
+                  {books.length ? (
+                    <div className="book-grid">
+                      {books.map((b) => (
+                        <article className="book-card" key={b.id}>
+                          <button className="book-face" onClick={() => open(b)}>
+                            {b.pages[0] && (
+                              <Preview book={b} page={b.pages[0]} />
+                            )}
+                          </button>
+                          <div className="card-caption">
+                            <div>
+                              <h3>{b.title}</h3>
+                              <p>
+                                {b.pages.length} 页 ·{" "}
+                                {new Date(b.updatedAt).toLocaleDateString(
+                                  "zh-CN",
+                                )}
+                              </p>
+                            </div>
+                            <button
+                              className="icon"
+                              aria-label={`删除 ${b.title}`}
+                              onClick={() =>
+                                setConfirm({
+                                  message: `删除本机的《${b.title}》？此操作不会撤回社区分享。`,
+                                  action: () =>
+                                    run("删除项目", async () => {
+                                      await deleteBook(b.id);
+                                      setBooks(await listBooks());
+                                    }),
+                                })
+                              }
+                            >
+                              <Trash2 size={15} />
+                            </button>
+                          </div>
+                        </article>
+                      ))}
+                    </div>
+                  ) : (
+                    <div className="empty-shelf">
+                      <BookOpen size={26} />
+                      <p>这里会收藏你正在创作的世界。</p>
+                      <button onClick={newBook}>
+                        开始第一本 <span>↗</span>
+                      </button>
+                    </div>
+                  )}
+                </section>
+                <section>
+                  <div className="section-line">
+                    <h2>从一本样书开始</h2>
+                    <span className="muted">开放许可 IP · 可编辑副本</span>
+                  </div>
+                  <div className="example-grid">
+                    {examples.map((ex) => (
+                      <button
+                        className="example-card"
+                        key={ex.id}
+                        onClick={() =>
+                          run("正在打开样书…", async () =>
+                            open(await loadExample(ex)),
+                          )
+                        }
+                      >
+                        <div className="example-image">
+                          <img src={ex.assets[0]?.url} alt={ex.title} />
+                          <span>打开样书 ↗</span>
+                        </div>
+                        <div className="example-caption">
+                          <h3>{ex.title}</h3>
+                          <p>{ex.subtitle}</p>
+                          <small>
+                            {ex.license} · {ex.assets.length} 份素材
+                          </small>
+                        </div>
+                      </button>
+                    ))}
+                  </div>
+                </section>
+                <footer className="home-footer">
+                  <span>IP BIBLE / 0.1</span>
+                  <span>为还在生长的世界，留下一页。</span>
+                  <a href="examples/ATTRIBUTION.md" target="_blank">
+                    素材来源与署名 ↗
+                  </a>
+                </footer>
+              </>
+            ) : (
+              <>
+                <div className="section-line community-heading">
+                  <div>
+                    <p className="eyebrow">SHARED WORLDS</p>
+                    <h1>翻开别人的世界。</h1>
+                  </div>
+                  <button onClick={newBook}>
+                    <Plus size={16} />
+                    开始创作
+                  </button>
+                </div>
+                {publicBooks.length ? (
+                  <div className="book-grid">
+                    {publicBooks.map((b) => (
+                      <article className="book-card" key={b.id}>
+                        <button
+                          className="book-face"
+                          onClick={() => {
+                            location.hash = `book/${b.id}`;
+                            loadPublic(b.id);
+                          }}
+                        >
+                          <img src={b.cover} alt={b.title} />
+                        </button>
+                        <h3>{b.title}</h3>
+                        <p>
+                          {b.author} · {b.count} 页
+                        </p>
+                      </article>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="empty-shelf">
+                    <BookOpen size={28} />
+                    <p>第一本公开设定集，等你来分享。</p>
+                  </div>
+                )}
+              </>
+            )}
+          </main>
+        </>
+      ) : (
+        <>
+          <header className="editor-header">
+            <div className="editor-title">
+              <button
+                className="icon"
+                aria-label="返回书架"
+                onClick={closeBook}
+              >
+                <ArrowLeft size={20} />
+              </button>
+              <BookOpen size={20} />
+              <input
+                aria-label="书名"
+                value={book.title}
+                onChange={(e) =>
+                  change((b) => {
+                    const previous = b.title;
+                    b.title = e.target.value;
+                    for (const p of b.pages)
+                      if (p.kind === "cover")
+                        for (const layer of p.elements)
+                          if (
+                            layer.type === "text" &&
+                            layer.text === previous &&
+                            !layer.locked
+                          )
+                            layer.text = b.title;
+                  })
+                }
+              />
+              <span className="save-state">{saved}</span>
+            </div>
+            <div className="editor-actions">
+              {controls}
+              <button
+                className="icon"
+                title="阅读预览"
+                aria-label="阅读预览"
+                onClick={() => {
+                  setReading(!reading);
+                  setElementId("");
+                }}
+              >
+                <Eye size={18} />
+              </button>
+              <button className="export-button" onClick={() => setMenu(!menu)}>
+                <Download size={16} />
+                <span>导出</span>
+              </button>
+              <button
+                className="primary"
+                aria-label="分享到社区"
+                onClick={() => {
+                  setPublishTitle(book.title);
+                  setPublishOpen(true);
+                }}
+              >
+                分享<span className="desktop-only">到社区</span>
+              </button>
+            </div>
+            {menu && (
+              <div className="dropdown">
+                <button
+                  onClick={() => {
+                    download(projectBlob(book), book.title + ".ipbible");
+                    setMenu(false);
+                  }}
+                >
+                  可编辑项目 .ipbible
+                </button>
+                <button
+                  onClick={() => {
+                    setMenu(false);
+                    run("准备导出…", async () => exportPDF(book, setBusy));
+                  }}
+                >
+                  PDF 设定书
+                </button>
+                <button
+                  onClick={() => {
+                    setMenu(false);
+                    run("生成阅读版…", async () => exportReader(book));
+                  }}
+                >
+                  离线阅读版 HTML
+                </button>
+                <button
+                  onClick={() => {
+                    setMenu(false);
+                    projectInput.current?.click();
+                  }}
+                >
+                  打开项目文件
+                </button>
+              </div>
+            )}
+          </header>
+          <div className={"workspace" + (reading ? " reading" : "")}>
+            {!reading && (
+              <aside className={"navigator" + (drawer ? " mobile-open" : "")}>
+                <div className="nav-tabs">
+                  <button
+                    className={tab === "pages" ? "selected" : ""}
+                    onClick={() => setTab("pages")}
+                  >
+                    书页 <span>{book.pages.length}</span>
+                  </button>
+                  <button
+                    className={tab === "assets" ? "selected" : ""}
+                    onClick={() => setTab("assets")}
+                  >
+                    素材 <span>{book.assets.length}</span>
+                  </button>
+                  <button
+                    className="mobile-only icon"
+                    aria-label="关闭侧栏"
+                    onClick={() => setDrawer(false)}
+                  >
+                    <X size={16} />
+                  </button>
+                </div>
+                {tab === "pages" ? (
+                  <>
+                    <div className="page-list">
+                      {book.pages.map((p, i) => (
+                        <div
+                          key={p.id}
+                          className={
+                            "page-nav" + (page?.id === p.id ? " selected" : "")
+                          }
+                        >
+                          <button
+                            onClick={() => {
+                              setPageId(p.id);
+                              setElementId("");
+                              setAssetId("");
+                              setDrawer(false);
+                            }}
+                          >
+                            <Preview book={book} page={p} />
+                            <span>
+                              <small>
+                                {String(i + 1).padStart(2, "0")} /{" "}
+                                {kindNames[p.kind]}
+                              </small>
+                              <strong>{p.name}</strong>
+                            </span>
+                          </button>
+                        </div>
+                      ))}
+                    </div>
+                    <div className="navigator-bottom">
+                      <select
+                        aria-label="新增页面类型"
+                        defaultValue=""
+                        onChange={(e) => {
+                          if (!e.target.value) return;
+                          const p = createPage(book, e.target.value as Kind);
+                          change((b) => b.pages.push(p));
+                          setPageId(p.id);
+                          e.target.value = "";
+                        }}
+                      >
+                        <option value="">＋ 添加书页</option>
+                        {Object.entries(kindNames).map(([k, n]) => (
+                          <option value={k} key={k}>
+                            {n}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <button
+                      className="upload-zone"
+                      onClick={() => fileInput.current?.click()}
+                    >
+                      <Upload size={22} />
+                      <strong>导入素材</strong>
+                      <small>PSD · 图片 · 设定文字</small>
+                    </button>
+                    <div className="asset-list">
+                      {book.assets.map((a) => (
+                        <div
+                          key={a.id}
+                          className={
+                            "asset-card" +
+                            (assetId === a.id ? " selected" : "") +
+                            (a.hidden ? " hidden-asset" : "")
+                          }
+                        >
+                          <button
+                            onClick={() => {
+                              setAssetId(a.id);
+                              setElementId("");
+                              setDrawer(false);
+                            }}
+                          >
+                            <img src={a.url} alt="" />
+                            <span>
+                              {a.name}
+                              <small>
+                                {a.layerPath ? "PSD 图层" : roleNames[a.role]}
+                              </small>
+                            </span>
+                          </button>
+                          <button
+                            className="icon"
+                            title="添加到当前页"
+                            aria-label={`插入 ${a.name}`}
+                            onClick={() => addAsset(a)}
+                          >
+                            <Plus size={15} />
+                          </button>
+                        </div>
+                      ))}
+                    </div>
+                  </>
+                )}
+              </aside>
+            )}
+            <main
+              className="canvas-area"
+              onDragOver={(e) => e.preventDefault()}
+              onDrop={(e) => {
+                e.preventDefault();
+                if (e.dataTransfer.files.length)
+                  importFiles(Array.from(e.dataTransfer.files));
+              }}
+            >
+              <div className="canvas-toolbar">
+                <div>
+                  <button
+                    className="icon mobile-only"
+                    aria-label="打开书页与素材"
+                    onClick={() => setDrawer(true)}
+                  >
+                    <Menu size={18} />
+                  </button>
+                  <span>{page ? kindNames[page.kind] : "空白项目"}</span>
+                  <span className="muted">
+                    {book.pages.findIndex((p) => p.id === page?.id) + 1} /{" "}
+                    {book.pages.length}
+                  </span>
+                </div>
+                {!reading && (
+                  <div>
+                    <button
+                      title="图形与配色"
+                      aria-label="图形与配色"
+                      className="icon"
+                      onClick={() => setMotifsOpen(true)}
+                    >
+                      <Layers size={18} />
+                    </button>
+                    <button
+                      title="添加文字"
+                      aria-label="添加文字"
+                      className="icon"
+                      onClick={() => {
+                        const e = text("新的文字", 100, 200, 450, 150, 28);
+                        changePage((p) => p.elements.push(e));
+                        setElementId(e.id);
+                      }}
+                    >
+                      <Type size={18} />
+                    </button>
+                    <button
+                      title="导入素材"
+                      aria-label="导入素材"
+                      className="icon"
+                      onClick={() => fileInput.current?.click()}
+                    >
+                      <ImageIcon size={18} />
+                    </button>
+                    <button
+                      disabled={page?.locked}
+                      onClick={() => {
+                        if (page) {
+                          change((b) => {
+                            b.seed++;
+                            const i = b.pages.findIndex(
+                              (p) => p.id === page.id,
+                            );
+                            b.pages[i] = regeneratePage(b, page);
+                          });
+                          setElementId("");
+                        }
+                      }}
+                    >
+                      <RefreshCw size={15} />
+                      <span>换个编排</span>
+                    </button>
+                  </div>
+                )}
+              </div>
+              {page && (
+                <div className="page-shell">
+                  <div className="page-stage">
+                    <Preview
+                      book={book}
+                      page={page}
+                      onPointerDown={(e) => startDrag(e)}
+                    />
+                    {element && !reading && (
+                      <div
+                        className={
+                          "selection" + (element.locked ? " locked" : "")
+                        }
+                        style={{
+                          left: `${(element.x / W) * 100}%`,
+                          top: `${(element.y / H) * 100}%`,
+                          width: `${(element.w / W) * 100}%`,
+                          height: `${(element.h / H) * 100}%`,
+                        }}
+                      >
+                        {!element.locked && (
+                          <button
+                            className="resize-handle"
+                            aria-label="缩放选中元素"
+                            onPointerDown={(e) => {
+                              e.stopPropagation();
+                              startDrag(e, true);
+                            }}
+                          />
+                        )}
+                      </div>
+                    )}
+                  </div>
+                </div>
+              )}
+              <div className="page-pagination">
+                <button
+                  className="icon"
+                  aria-label="上一页"
+                  disabled={book.pages.indexOf(page!) <= 0}
+                  onClick={() => {
+                    setPageId(book.pages[book.pages.indexOf(page!) - 1].id);
+                    setElementId("");
+                  }}
+                >
+                  <ChevronLeft size={18} />
+                </button>
+                <span>{page?.name}</span>
+                <button
+                  className="icon"
+                  aria-label="下一页"
+                  disabled={book.pages.indexOf(page!) >= book.pages.length - 1}
+                  onClick={() => {
+                    setPageId(book.pages[book.pages.indexOf(page!) + 1].id);
+                    setElementId("");
+                  }}
+                >
+                  <ChevronRight size={18} />
+                </button>
+              </div>
+            </main>
+            {!reading && (
+              <aside className="inspector">
+                <div className="inspector-heading">
+                  <span>
+                    {asset ? "素材设定" : element ? "图层编辑" : "书页设置"}
+                  </span>
+                  {(asset || element) && (
+                    <button
+                      className="icon"
+                      aria-label="取消选择"
+                      onClick={() => {
+                        setAssetId("");
+                        setElementId("");
+                      }}
+                    >
+                      <X size={16} />
+                    </button>
+                  )}
+                </div>
+                {asset ? (
+                  <div className="fields">
+                    <img className="asset-preview" src={asset.url} />
+                    <label>
+                      素材名称
+                      <input
+                        value={asset.name}
+                        onChange={(e) =>
+                          change((b) => {
+                            b.assets.find((a) => a.id === asset.id)!.name =
+                              e.target.value;
+                          })
+                        }
+                      />
+                    </label>
+                    <label>
+                      内容类型
+                      <select
+                        value={asset.role}
+                        onChange={(e) =>
+                          change((b) => {
+                            b.assets.find((a) => a.id === asset.id)!.role = e
+                              .target.value as Role;
+                          })
+                        }
+                      >
+                        {Object.entries(roleNames).map(([k, n]) => (
+                          <option key={k} value={k}>
+                            {n}
+                          </option>
+                        ))}
+                      </select>
+                    </label>
+                    <label>
+                      设定介绍
+                      <textarea
+                        rows={8}
+                        value={asset.description}
+                        onChange={(e) =>
+                          change((b) => {
+                            b.assets.find(
+                              (a) => a.id === asset.id,
+                            )!.description = e.target.value;
+                          })
+                        }
+                      />
+                    </label>
+                    <label className="check-row">
+                      <input
+                        type="checkbox"
+                        checked={!asset.hidden}
+                        onChange={(e) =>
+                          change((b) => {
+                            b.assets.find((a) => a.id === asset.id)!.hidden =
+                              !e.target.checked;
+                          })
+                        }
+                      />
+                      参与整书生成
+                    </label>
+                    <button className="primary" onClick={() => addAsset(asset)}>
+                      <Plus size={15} />
+                      放入当前页
+                    </button>
+                    {asset.warning && (
+                      <p className="warning">{asset.warning}</p>
+                    )}
+                    {asset.layerPath && (
+                      <p className="source-note">
+                        {asset.sourceFile}
+                        <br />
+                        {asset.layerPath}
+                      </p>
+                    )}
+                    {asset.credit && (
+                      <p className="source-note">
+                        {asset.credit}
+                        <br />
+                        {asset.license}
+                        <br />
+                        <a
+                          href={asset.sourceUrl}
+                          target="_blank"
+                          rel="noreferrer"
+                        >
+                          查看素材来源 ↗
+                        </a>
+                      </p>
+                    )}
+                  </div>
+                ) : element ? (
+                  <div className="fields">
+                    <div className="layer-actions">
+                      <button
+                        onClick={() =>
+                          changeElement({ locked: !element.locked })
+                        }
+                      >
+                        {element.locked ? (
+                          <Lock size={15} />
+                        ) : (
+                          <Unlock size={15} />
+                        )}{" "}
+                        {element.locked ? "已锁定" : "锁定"}
+                      </button>
+                      <button
+                        aria-label="复制图层"
+                        onClick={() => {
+                          const copy = {
+                            ...element,
+                            id: uid(),
+                            x: element.x + 16,
+                            y: element.y + 16,
+                          };
+                          changePage((p) => p.elements.push(copy));
+                          setElementId(copy.id);
+                        }}
+                      >
+                        <Copy size={15} />
+                      </button>
+                      <button
+                        aria-label="删除图层"
+                        disabled={element.locked}
+                        onClick={() => {
+                          changePage((p) => {
+                            p.elements = p.elements.filter(
+                              (e) => e.id !== element.id,
+                            );
+                          });
+                          setElementId("");
+                        }}
+                      >
+                        <Trash2 size={15} />
+                      </button>
+                    </div>
+                    {element.type === "text" && (
+                      <>
+                        <label>
+                          文字
+                          <textarea
+                            aria-label="图层文字"
+                            rows={7}
+                            value={element.text}
+                            disabled={element.locked}
+                            onChange={(e) =>
+                              changeElement({ text: e.target.value })
+                            }
+                          />
+                        </label>
+                        <div className="field-row">
+                          <label>
+                            字号
+                            <input
+                              type="number"
+                              min="6"
+                              max="200"
+                              value={element.fontSize}
+                              onChange={(e) =>
+                                changeElement({
+                                  fontSize: Math.max(
+                                    6,
+                                    Math.min(200, +e.target.value),
+                                  ),
+                                })
+                              }
+                            />
+                          </label>
+                          <label>
+                            文字颜色
+                            <input
+                              type="color"
+                              value={element.color}
+                              onChange={(e) =>
+                                changeElement({ color: e.target.value })
+                              }
+                            />
+                          </label>
+                        </div>
+                        <label>
+                          字体
+                          <select
+                            value={element.fontFamily}
+                            onChange={(e) =>
+                              changeElement({
+                                fontFamily: e.target.value as "serif" | "sans",
+                              })
+                            }
+                          >
+                            <option value="serif">书籍衬线</option>
+                            <option value="sans">清晰黑体</option>
+                          </select>
+                        </label>
+                        {overflowing(element) && (
+                          <p className="warning">
+                            文字超出了文本框，可扩大高度或减小字号。
+                          </p>
+                        )}
+                      </>
+                    )}
+                    {element.type === "image" && (
+                      <>
+                        <label>
+                          图片适配
+                          <select
+                            value={element.fit}
+                            onChange={(e) =>
+                              changeElement({
+                                fit: e.target.value as "cover" | "contain",
+                              })
+                            }
+                          >
+                            <option value="contain">完整展示</option>
+                            <option value="cover">铺满裁切</option>
+                          </select>
+                        </label>
+                        <label>
+                          替换素材
+                          <select
+                            value={element.assetId}
+                            onChange={(e) =>
+                              changeElement({ assetId: e.target.value })
+                            }
+                          >
+                            {book.assets.map((a) => (
+                              <option key={a.id} value={a.id}>
+                                {a.name}
+                              </option>
+                            ))}
+                          </select>
+                        </label>
+                      </>
+                    )}
+                    {element.type === "shape" && (
+                      <label>
+                        颜色
+                        <input
+                          type="color"
+                          value={element.fill}
+                          onChange={(e) =>
+                            changeElement({ fill: e.target.value })
+                          }
+                        />
+                      </label>
+                    )}
+                    <div className="field-row">
+                      {(["x", "y"] as const).map((k) => (
+                        <label key={k}>
+                          {k.toUpperCase()}
+                          <input
+                            type="number"
+                            aria-label={k.toUpperCase()}
+                            disabled={element.locked}
+                            value={Math.round(element[k])}
+                            onChange={(e) =>
+                              changeElement({
+                                [k]: Math.max(
+                                  -2000,
+                                  Math.min(3000, +e.target.value),
+                                ),
+                              })
+                            }
+                          />
+                        </label>
+                      ))}
+                    </div>
+                    <div className="field-row">
+                      {(["w", "h"] as const).map((k) => (
+                        <label key={k}>
+                          {k === "w" ? "宽度" : "高度"}
+                          <input
+                            type="number"
+                            min="1"
+                            disabled={element.locked}
+                            value={Math.round(element[k])}
+                            onChange={(e) =>
+                              changeElement({
+                                [k]: Math.max(
+                                  1,
+                                  Math.min(3000, +e.target.value),
+                                ),
+                              })
+                            }
+                          />
+                        </label>
+                      ))}
+                    </div>
+                    <label>
+                      不透明度
+                      <input
+                        type="range"
+                        min="0"
+                        max="1"
+                        step=".05"
+                        value={element.opacity ?? 1}
+                        onChange={(e) =>
+                          changeElement({ opacity: +e.target.value })
+                        }
+                      />
+                    </label>
+                    <div className="field-row">
+                      <button
+                        aria-label="图层上移"
+                        disabled={element.locked}
+                        onClick={() =>
+                          changePage((p) => {
+                            const i = p.elements.findIndex(
+                              (e) => e.id === element.id,
+                            );
+                            if (i < p.elements.length - 1)
+                              [p.elements[i], p.elements[i + 1]] = [
+                                p.elements[i + 1],
+                                p.elements[i],
+                              ];
+                          })
+                        }
+                      >
+                        <ChevronUp size={15} />
+                        上移
+                      </button>
+                      <button
+                        aria-label="图层下移"
+                        disabled={element.locked}
+                        onClick={() =>
+                          changePage((p) => {
+                            const i = p.elements.findIndex(
+                              (e) => e.id === element.id,
+                            );
+                            if (i > 0)
+                              [p.elements[i], p.elements[i - 1]] = [
+                                p.elements[i - 1],
+                                p.elements[i],
+                              ];
+                          })
+                        }
+                      >
+                        <ChevronDown size={15} />
+                        下移
+                      </button>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="fields">
+                    <label>
+                      页面名称
+                      <input
+                        value={page?.name || ""}
+                        onChange={(e) =>
+                          changePage((p) => {
+                            p.name = e.target.value;
+                          })
+                        }
+                      />
+                    </label>
+                    <div className="field-row">
+                      <label>
+                        纸张颜色
+                        <input
+                          type="color"
+                          value={page?.background || "#f5f1e8"}
+                          onChange={(e) =>
+                            changePage((p) => {
+                              p.background = e.target.value;
+                            })
+                          }
+                        />
+                      </label>
+                      <label>
+                        主题色
+                        <input
+                          type="color"
+                          value={book.accent}
+                          onChange={(e) =>
+                            change((b) => {
+                              b.accent = e.target.value;
+                            })
+                          }
+                        />
+                      </label>
+                    </div>
+                    <div className="page-ops">
+                      <button
+                        aria-label="书页前移"
+                        onClick={() =>
+                          change((b) => {
+                            const i = b.pages.findIndex(
+                              (p) => p.id === page?.id,
+                            );
+                            if (i > 0)
+                              [b.pages[i], b.pages[i - 1]] = [
+                                b.pages[i - 1],
+                                b.pages[i],
+                              ];
+                          })
+                        }
+                      >
+                        <ChevronUp size={15} />
+                        前移
+                      </button>
+                      <button
+                        aria-label="书页后移"
+                        onClick={() =>
+                          change((b) => {
+                            const i = b.pages.findIndex(
+                              (p) => p.id === page?.id,
+                            );
+                            if (i < b.pages.length - 1)
+                              [b.pages[i], b.pages[i + 1]] = [
+                                b.pages[i + 1],
+                                b.pages[i],
+                              ];
+                          })
+                        }
+                      >
+                        <ChevronDown size={15} />
+                        后移
+                      </button>
+                      <button
+                        aria-label="复制书页"
+                        onClick={() => {
+                          if (page) {
+                            const p = structuredClone(page);
+                            p.id = uid();
+                            p.name += " · 副本";
+                            change((b) =>
+                              b.pages.splice(
+                                b.pages.findIndex((q) => q.id === page.id) + 1,
+                                0,
+                                p,
+                              ),
+                            );
+                            setPageId(p.id);
+                          }
+                        }}
+                      >
+                        <Copy size={15} />
+                      </button>
+                      <button
+                        aria-label="删除书页"
+                        disabled={book.pages.length < 2}
+                        onClick={() =>
+                          setConfirm({
+                            message: "删除当前书页？可通过撤销恢复。",
+                            action: () => {
+                              change((b) => {
+                                b.pages = b.pages.filter(
+                                  (p) => p.id !== page?.id,
+                                );
+                              });
+                              setPageId("");
+                            },
+                          })
+                        }
+                      >
+                        <Trash2 size={15} />
+                      </button>
+                    </div>
+                    <details open>
+                      <summary>整本设定</summary>
+                      <label>
+                        副标题
+                        <input
+                          value={book.subtitle}
+                          onChange={(e) =>
+                            change((b) => {
+                              b.subtitle = e.target.value;
+                            })
+                          }
+                        />
+                      </label>
+                      <label>
+                        作者 / 署名
+                        <input
+                          value={book.author}
+                          onChange={(e) =>
+                            change((b) => {
+                              b.author = e.target.value;
+                            })
+                          }
+                        />
+                      </label>
+                      <label>
+                        世界观与简介
+                        <textarea
+                          rows={5}
+                          value={book.description}
+                          onChange={(e) =>
+                            change((b) => {
+                              b.description = e.target.value;
+                            })
+                          }
+                        />
+                      </label>
+                      <button
+                        className="wide"
+                        onClick={() =>
+                          setConfirm({
+                            message:
+                              "根据当前素材与介绍重新生成整本书？当前编排可通过撤销恢复。",
+                            action: () => {
+                              const next = generateBook({
+                                ...book,
+                                seed: book.seed + 1,
+                              });
+                              commit(next);
+                              setPageId(next.pages[0].id);
+                            },
+                          })
+                        }
+                      >
+                        <RefreshCw size={15} />
+                        生成整本设定集
+                      </button>
+                      {provider && (
+                        <button
+                          className="wide"
+                          onClick={() =>
+                            setConfirm({
+                              message:
+                                "将最多 12 张素材和设定文字发送给此服务配置的 AI 模型，生成可供审阅的内容建议？",
+                              action: analyze,
+                            })
+                          }
+                        >
+                          理解素材并建议内容
+                        </button>
+                      )}
+                    </details>
+                  </div>
+                )}
+                {page && (
+                  <details className="layers-panel" open>
+                    <summary>
+                      <Layers size={14} /> 页面图层{" "}
+                      <span>{page.elements.length}</span>
+                    </summary>
+                    {[...page.elements].reverse().map((e) => (
+                      <button
+                        className={elementId === e.id ? "selected" : ""}
+                        key={e.id}
+                        onClick={() => {
+                          setElementId(e.id);
+                          setAssetId("");
+                        }}
+                      >
+                        {e.type === "text" ? (
+                          <Type size={13} />
+                        ) : e.type === "image" ? (
+                          <ImageIcon size={13} />
+                        ) : (
+                          <Layers size={13} />
+                        )}
+                        <span>
+                          {e.text?.slice(0, 30) ||
+                            book.assets.find((a) => a.id === e.assetId)?.name ||
+                            (e.type === "motif" ? "图形部件" : "色块")}
+                        </span>
+                        {e.locked && <Lock size={11} />}
+                      </button>
+                    ))}
+                  </details>
+                )}
+              </aside>
+            )}
+          </div>
+        </>
+      )}
+      {motifsOpen && book && page && (
+        <MotifPicker
+          background={page.background}
+          accent={book.accent}
+          onClose={() => setMotifsOpen(false)}
+          onPick={(key) => {
+            const e: Element = {
+              id: uid(),
+              type: "motif",
+              motif: key,
+              x: 80,
+              y: 300,
+              w: 630,
+              h: 420,
+              opacity: 0.65,
+              fill: book.accent,
+              color: "#35432e",
+            };
+            changePage((p) => p.elements.push(e));
+            setElementId(e.id);
+            setMotifsOpen(false);
+          }}
+          onPalette={(palette) => {
+            change((b) => {
+              b.accent = palette.accent;
+              const p = b.pages.find((p) => p.id === page.id)!;
+              p.background = palette.bg;
+              for (const e of p.elements)
+                if (!e.locked) {
+                  if (e.type === "text") e.color = palette.fg;
+                  if (e.type === "motif") {
+                    e.color = palette.fg;
+                    e.fill = palette.accent;
+                  }
+                }
+            });
+            setMotifsOpen(false);
+          }}
+        />
+      )}
+      {notice && (
+        <div className="toast" role="status">
+          <span>{notice}</span>
+          <button
+            className="icon"
+            aria-label="关闭通知"
+            onClick={() => setNotice("")}
+          >
+            <X size={15} />
+          </button>
+        </div>
+      )}
+      {busy && (
+        <div className="busy">
+          <div className="spinner" />
+          <span>{busy}</span>
+        </div>
+      )}
+      {confirm && (
+        <div className="modal-backdrop">
+          <div className="modal small">
+            <p>{confirm.message}</p>
+            <div className="modal-actions">
+              <button onClick={() => setConfirm(null)}>取消</button>
+              <button
+                className="primary"
+                onClick={() => {
+                  const fn = confirm.action;
+                  setConfirm(null);
+                  fn();
+                }}
+              >
+                继续
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+      {publishOpen && (
+        <div className="modal-backdrop">
+          <div className="modal small">
+            <div className="section-line">
+              <h2>分享这本设定集</h2>
+              <button
+                className="icon"
+                onClick={() => setPublishOpen(false)}
+                aria-label="关闭分享"
+              >
+                <X size={18} />
+              </button>
+            </div>
+            <p>
+              分享后，社区读者可以翻阅书页。原始 PSD 和可编辑项目保留在本机。
+            </p>
+            <label>
+              书名
+              <input
+                value={publishTitle}
+                onChange={(e) => setPublishTitle(e.target.value)}
+              />
+            </label>
+            <label className="check-row consent">
+              <input
+                type="checkbox"
+                checked={consent}
+                onChange={(e) => setConsent(e.target.checked)}
+              />
+              我有权公开这些内容，并同意发布阅读版。
+            </label>
+            <button
+              className="primary wide"
+              disabled={!consent}
+              onClick={publish}
+            >
+              发布阅读版
+            </button>
+          </div>
+        </div>
+      )}
+      {publicBook && (
+        <div className="reader-overlay">
+          <header>
+            <div>
+              <strong>{publicBook.title}</strong>
+              <small>{publicBook.author}</small>
+            </div>
+            <div>
+              <button
+                onClick={() => {
+                  const u = new URL(location.href);
+                  u.hash = `book/${publicBook.id}`;
+                  if (navigator.clipboard)
+                    navigator.clipboard
+                      .writeText(u.href)
+                      .then(() => flash("阅读链接已复制"));
+                  else flash(u.href);
+                }}
+              >
+                <Copy size={16} />
+                复制链接
+              </button>
+              {localStorage.getItem("ipbible:share:" + publicBook.id) && (
+                <button
+                  onClick={() =>
+                    setConfirm({
+                      message: "撤回这本书的社区阅读版？本机项目会保留。",
+                      action: () =>
+                        run("撤回分享", async () => {
+                          const r = await fetch(`api/books/${publicBook.id}`, {
+                            method: "DELETE",
+                            headers: {
+                              "X-Owner-Token": localStorage.getItem(
+                                "ipbible:share:" + publicBook.id,
+                              )!,
+                            },
+                          });
+                          if (!r.ok) throw Error("撤回失败");
+                          setPublicBook(null);
+                          setNotice("");
+                          location.hash = "";
+                          localStorage.removeItem(
+                            "ipbible:share:" + publicBook.id,
+                          );
+                          if (view === "community") loadCommunity();
+                        }),
+                    })
+                  }
+                >
+                  <Trash2 size={16} />
+                  撤回
+                </button>
+              )}
+              <button
+                className="icon"
+                aria-label="关闭阅读"
+                onClick={() => {
+                  setPublicBook(null);
+                  location.hash = "";
+                }}
+              >
+                <X size={20} />
+              </button>
+            </div>
+          </header>
+          <main>
+            {publicBook.pages?.map((src, i) => (
+              <img key={i} src={src} alt={`第 ${i + 1} 页`} />
+            ))}
+          </main>
+          <footer>
+            {publicBook.credits?.map((c, i) => (
+              <p key={i}>{c}</p>
+            ))}
+          </footer>
+        </div>
+      )}
+      {aiOpen && aiDraft && (
+        <div className="modal-backdrop">
+          <div className="modal">
+            <div className="section-line">
+              <h2>审阅内容建议</h2>
+              <button className="icon" onClick={() => setAiOpen(false)}>
+                <X size={18} />
+              </button>
+            </div>
+            <p>
+              确认后写入素材介绍，再生成书页。请核对模型对角色与世界观的理解。
+            </p>
+            {aiDraft.assets?.map((a: any) => (
+              <label key={a.id}>
+                {book?.assets.find((x) => x.id === a.id)?.name}
+                <textarea
+                  value={a.description}
+                  onChange={(e) =>
+                    setAiDraft({
+                      ...aiDraft,
+                      assets: aiDraft.assets.map((x: any) =>
+                        x.id === a.id
+                          ? { ...x, description: e.target.value }
+                          : x,
+                      ),
+                    })
+                  }
+                />
+              </label>
+            ))}
+            <button
+              className="primary"
+              onClick={() => {
+                change((b) => {
+                  for (const a of aiDraft.assets || []) {
+                    const original = b.assets.find((x) => x.id === a.id);
+                    if (original && typeof a.description === "string")
+                      original.description = a.description;
+                  }
+                });
+                setAiOpen(false);
+                flash("建议已写入素材介绍，可生成整书应用。");
+              }}
+            >
+              采用这些介绍
+            </button>
+          </div>
+        </div>
+      )}
+    </>
+  );
+}
+createRoot(document.getElementById("root")!).render(<App />);
