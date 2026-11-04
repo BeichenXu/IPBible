@@ -13,9 +13,13 @@ export function createPage(book:Book,kind:Kind,assetId?:string,variant=0):Page {
  }else{
   e.push(text(`${kindNames[kind]}  /  ${book.title}`,margin,40,670,24,13,accent),shape(margin,77,W-margin*2,1,'#c7c2b7'));
   if(kind==='character'){
+   if(a&&a.width/a.height>1.18){
+    e.push(text(a.name,62,104,670,92,42,'#29382f','serif'),img(a.id,62,235,670,465,'contain'),text('CHARACTER PROFILE',62,755,170,35,13,accent),text(a.description||'在这里写下角色的身份、性格与经历。',267,750,465,240,20),text(a.credit||'',62,1000,670,48,11,'#797b70'));
+   }else{
    const right=variant%2===1; if(a)e.push(img(a.id,right?337:42,185,415,688,'contain'));
    const tx=right?62:468,tw=264;
    e.push(text(a?.name||'角色名称',62,104,670,70,42,'#29382f','serif'),text('CHARACTER PROFILE',tx,220,tw,35,13,accent),shape(tx,272,42,2,accent),text(a?.description||'在这里写下角色的身份、性格与经历。',tx,300,tw,480,20),text(a?.credit||'',62,1000,670,48,11,'#797b70'));
+   }
   }else if(kind==='world'){
    e.push(text(a?.name||'世界与地图',62,107,670,82,42,'#29382f','serif'));
    if(a)e.push(img(a.id,62,220,670,472,'contain'));
